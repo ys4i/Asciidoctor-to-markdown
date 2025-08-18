@@ -1,0 +1,451 @@
+# Display and selection controls
+
+## Board layers
+
+Layers in the PCB Editor represent physical copper layers on a board, as
+well as graphical layers used for defining things such as silkscreen,
+solder mask, and the board edge. There is always one layer that is
+active in the editor. The active layer is drawn on top of other layers
+and will be the layer assigned to newly-created objects. The active
+layer is indicated in the layer selector drop-down box in the top
+toolbar and is also highlighted in the appearance panel. To change the
+active layer, you can left-click a layer name in the appearance panel,
+use the drop-down layer selector in the top toolbar, or use a hotkey.
+Layers can be hidden to simplify the board view. You can hide a layer
+even if it is the active layer.
+
+### Display order for board layers
+
+The display order for board layers is dynamic and depends on which layer
+is selected as the active layer. The active layer is always drawn on top
+of other layers. In addition, layers that are related to the active
+layer are drawn on top of layers that are unrelated. For example, if you
+make B.Silkscreen the active layer, then all of the other back layers
+(B.Cu, B.Adhesive, B.Paste, B.Mask, B.Fab, and B.Courtyard) will be
+drawn on top of the front, user, and inner copper layers, with
+B.Silkscreen topmost. If you make Edge.Cuts active, then it will be
+drawn on top, and the User.\* layers and Margin will also be be brought
+to the front.
+
+<div class="note">
+
+Selected objects are always drawn on top, even if they are not on the
+active layer.
+
+</div>
+
+## The appearance panel
+
+The appearance panel provides controls to manage the visibility, color,
+and opacity of objects in the PCB Editor’s drawing canvas. It has three
+tabs: the Layers tab contains controls for the board layers, the Objects
+tab contains controls for different types of graphical objects, and the
+Nets tab contains controls for the appearance of the ratsnest and copper
+items.
+
+### Layer controls
+
+In the Layers tab of the appearance panel, each board layer is shown
+with its color and visibility state. The active layer is shown
+highlighted with an arrow indicator to the left of the color swatch.
+Left-click on a layer to choose it as the active layer. Left-click on
+the corresponding visibility icon to toggle the layer between visible
+and hidden. Double-click or middle-click on the color swatch to change
+the layer’s color.
+
+<div class="note">
+
+You must first create a custom color theme in Preferences before you can
+change layer colors in the appearance panel.
+
+</div>
+
+Below the list of layers is an expandable panel that contains layer
+display options. The first setting controls how non-active layers are
+displayed: normal, dimmed, or hidden. The layer display mode can be used
+to simplify the view and focus on a single layer. Items on inactive
+layers cannot be selected when the non-active layer display mode is
+"Dim" or "Hide". You can use the hotkey
+<span class="keycombo">Ctrl+H</span> to cycle through these display
+modes quickly.
+
+**Flip board view** will show the board as if you are looking from the
+bottom (that is, mirrored around the Y-axis). This option is also
+available in the View menu.
+
+<div class="note">
+
+Flipping the board view does not change the visual layer ordering, the
+active layer will remain in front followed by the other layers in their
+normal order.
+
+</div>
+
+### Object controls
+
+The Objects tab of the appearance panel is similar to the Layers tab.
+The main differences are that some objects have no color setting and
+that four types of objects (tracks, vias, pads, and zones) have opacity
+control sliders. The opacity setting here will be multiplied with any
+opacity set in the layer colors. By default, all objects are fully
+opaque except for zones, which are set to translucent in order to make
+it easier to see objects through filled zone areas.
+
+### Layer presets
+
+Layer presets store which layers and objects are visible and hidden for
+easy recall. There are several built-in layer presets and you can save
+your own custom presets. Custom presets are stored in the project
+settings for a board, as presets may be specific to a certain board
+stackup.
+
+To load a preset, choose it from the Presets drop-down menu at the
+bottom of the appearance panel or use the quick switcher by holding down
+Ctrl and pressing Tab. Once the quick switcher window appears, you can
+press Tab and <span class="keycombo">Shift+Tab</span> to cycle through
+the available presets. When you let go of the Ctrl key, the highlighted
+preset will be loaded.
+
+To save a custom preset, first use the visibility controls to choose
+which layers you want visible, then choose **Save preset…​** from the
+Presets drop-down menu. Give your preset a name and it will now be
+available via the drop-down menu and the quick switcher. To modify a
+custom preset, follow the same process and save the modified version
+with the same name to overwrite the existing version. To delete a custom
+preset, choose the **Delete preset…​** option from the drop-down menu and
+select the preset to be deleted from the list.
+
+### Viewports
+
+Viewports store the current view location and zoom level so you can
+quickly switch back to it later, or switch between several saved views.
+
+To load a viewport, choose it from the Viewports drop-down menu at the
+bottom of the appearance panel or use the quick switcher by holding down
+Shift and pressing Tab. Once the quick switcher window appears, you can
+press Tab to cycle through the stored viewports. When you let go of the
+Shift key, the highlighted viewport will be loaded.
+
+To save a new viewport, scroll and zoom to show the desired area of the
+board, then choose **Save viewport…​** from the Viewports drop-down menu.
+Give your viewport a name and it will now be available via the drop-down
+menu and the quick switcher. To modify an existing viewport, save a new
+viewport with the same name to overwrite the existing version. To delete
+a viewport, choose the **Delete viewport…​** option from the drop-down
+menu and select the preset to be deleted from the list.
+
+### Net and net class controls
+
+The Nets tab of the appearance panel shows a list of all nets and net
+classes in the board. Each net has a visibility control that controls
+the visibility of that net in the ratsnest. Hiding nets in the ratsnest
+does not change the connectivity of the board and will not impact the
+design rule checker; it only is intended to make the ratsnest easier to
+understand.
+
+Each net and net class can also have a color assigned. By default, this
+color applies to the ratsnest lines for the net (or for all the nets in
+the net class). Nets have no color by default; this is indicated by a
+checkerboard pattern in the color swatch. Double-click or right-click a
+net or net class color swatch to set the color. To give a net class the
+same color it has in the schematic, right click the net class and select
+**Use color from schematic**.
+
+<div class="note">
+
+The Default net class cannot have a color assigned, as nets in this
+class will just use the default ratsnest color defined by the color
+theme.
+
+</div>
+
+You can also select and highlight nets and net classes via the
+appearance panel: right-click on a net or net class to show these
+options in a menu.
+
+Below the list of net classes is an expandable panel that contains net
+display options. The first option controls how net colors are applied.
+When "All" is selected, all copper items (pads, tracks, vias, and zones)
+belonging to a net or net class will take on the chosen color. When
+"Ratsnest" is selected (the default value), only the ratsnest is
+affected by net and net class colors. When "None" is selected, net and
+net class colors are ignored.
+
+The second option controls how ratsnest lines are drawn. "All layers"
+means that ratsnest lines will be drawn between all unconnected items.
+"Visible layers" means that no ratsnest lines will be drawn to items
+that are on hidden layers, even when those items are unconnected.
+
+<div class="note">
+
+You can configure the thickness of ratsnest lines in the PCB Editor
+Editing Options section of the Preferences dialog, to make the ratsnest
+more or less visible.
+
+</div>
+
+## Selection and the selection filter
+
+Selecting items in the editing canvas is done with the left mouse
+button. Single-clicking on an object will select it and dragging will
+perform a box selection. A box selection from left to right will only
+select items that are fully inside the box. A box selection from right
+to left will select any items that touch the box. A left-to-right
+selection box is drawn in yellow, with a cursor that indicates exclusive
+selection, and a right-to-left selection box is drawn in blue with a
+cursor that indicates inclusive selection.
+
+The selection action can be modified by holding modifier keys while
+clicking or dragging. The following modifier keys apply when clicking to
+select single items:
+
+| Modifier Keys (Windows)                  | Modifier Keys (Linux)                    | Modifier Keys (macOS)                   | Selection Effect                                                                                                               |
+|------------------------------------------|------------------------------------------|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| Ctrl                                     | Ctrl                                     | Cmd                                     | Toggle selection. Note: Ctrl+click can be remapped to highlight net in **Preferences** → **PCB Editor** → **Editing Options**. |
+| Shift                                    | Shift                                    | Shift                                   | Add the item to the existing selection.                                                                                        |
+| <span class="keycombo">Ctrl+Shift</span> | <span class="keycombo">Ctrl+Shift</span> | <span class="keycombo">Cmd+Shift</span> | Remove the item from the existing selection.                                                                                   |
+| long click                               | long click or Alt                        | long click or Option                    | Clarify selection from a pop-up menu.                                                                                          |
+
+The following modifier keys apply when dragging to perform a box
+selection:
+
+| Modifier Keys (Windows)                  | Modifier Keys (Linux)                    | Modifier Keys (macOS)                   | Selection Effect                            |
+|------------------------------------------|------------------------------------------|-----------------------------------------|---------------------------------------------|
+| Ctrl                                     | Ctrl                                     | Cmd                                     | Toggle selection.                           |
+| Shift                                    | Shift                                    | Shift                                   | Add item(s) to the existing selection.      |
+| <span class="keycombo">Ctrl+Shift</span> | <span class="keycombo">Ctrl+Shift</span> | <span class="keycombo">Cmd+Shift</span> | Remove item(s) from the existing selection. |
+
+The selection filter panel in the lower right corner of the PCB Editor
+window controls which types of objects can be selected with the mouse.
+Turning off selection of unwanted object types makes it easier to select
+items in a dense board. The "All items" checkbox is a shortcut to turn
+the other items on and off. The "Locked items" checkbox is independent
+of the rest, and controls whether or not items that have been locked can
+be selected. You can right-click any object type in the selection filter
+to quickly change the filter to only allow selecting that type of
+object.
+
+<figure>
+<img src="images/selection_filter.png" alt="selection filter" />
+</figure>
+
+When a connected copper item is selected, you can expand the selection
+to other copper items of the same net using the Expand Selection command
+in the right-click context menu or with the hotkey U. The first time you
+run this command, the selection will be expanded to the nearest pad. The
+second time, the selection will be expanded to all connected items on
+all layers.
+
+Selecting an object displays information about the object in the message
+panel at the bottom of the window. Double-clicking an object opens a
+window to edit the object’s properties.
+
+Pressing Esc will always cancel the current tool or operation and return
+to the selection tool. Pressing Esc while the selection tool is active
+will clear the current selection.
+
+## Net highlighting
+
+An electrical net (or set of nets) can be highlighted in the PCB editor
+to visualize how the net is routed across the PCB. Net highlighting can
+be activated by selecting the net to highlight in the PCB editor or by
+selecting the corresponding net in the schematic editor when cross-probe
+highlighting is enabled (see below). When net highlighting is active,
+the highlighted net or nets will be shown in a brighter color and all
+other items will be shown in a dimmer color than normal.
+
+There are several ways to select a net or nets to highlight in the PCB
+editor:
+
+- Use the hotkey \` after selecting a copper object, or while hovering
+  over a copper object
+
+- Right click a copper object in the editing canvas and select **Net
+  Inspection Tools** → **Highlight Net**
+
+- Right click a net in the **Nets** tab of the Appearance panel and
+  select **Highlight**
+
+- Double click a net in the [Net Inspector](#net-inspector)
+
+When you press the Highlight Net hotkey, the nets of any selected copper
+items will be highlighted. If no copper items are selected, the net of
+the copper item under the editor cursor will be highlighted.
+
+Net highlighting can be cleared by using the Clear Net Highlight action
+(hotkey ~) or by using the Highlight net tool on an empty region in the
+board. By default, Esc also clears net highlighting, but this can be
+disabled if desired in **Preferences** → **PCB Editor** → **Editing
+Options**.
+
+When a net or nets have been selected for highlighting, the Toggle Net
+Highlighting action becomes enabled on the left toolbar (also accessible
+by hotkey, <span class="keycombo">Ctrl+\`</span>). This action will turn
+the highlighting display on or off without choosing a new net to
+highlight.
+
+## Cross-probing from the schematic
+
+KiCad allows bi-directional cross-probing between the schematic and the
+PCB. There are several different types of cross-probing.
+
+**Selection cross-probing** allows you to select a symbol or pin in the
+schematic to select the corresponding footprint or pad in the PCB (if
+one exists) and vice-versa. By default, cross-probing will result in the
+display centering on the cross-probed item and zooming to fit. You can
+disable the centering and zooming behavior, or disable selection
+cross-probing entirely, in the Display Options section of the
+Preferences dialog. Even when selection cross-probing is disabled, you
+can manually cross-probe from the schematic to the PCB by right-clicking
+an object and selecting **Select on PCB**, or from the PCB to the
+schematic by right-clicking an object and choosing **Select** → **Select
+on Schematic**.
+
+**Highlight cross-probing** allows you to highlight a net in the
+schematic and PCB at the same time. If the option "Highlight
+cross-probed nets" is enabled in the Display Options section of the
+Preferences dialog, highlighting a net or bus in the schematic editor
+will cause the corresponding net or nets to be highlighted in the PCB
+editor.
+
+## Left toolbar display controls
+
+The left toolbar provides options to change the display of items in the
+PCB Editor.
+
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 95%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><img src="images/icons/grid_24.png"
+alt="grid 24" /></p></td>
+<td style="text-align: left;"><p>Turns grid display on/off.</p>
+<p><strong>Note:</strong> by default, hiding the grid does not disable
+<a href="#grids-and-snapping">grid snapping</a>. This behavior can be
+changed in the Display Options section of Preferences.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/grid_override_24.png"
+alt="grid override enable button" /></p></td>
+<td style="text-align: left;"><p>Turns item-specific <a
+href="#grids-and-snapping">grid overrides</a> on/off.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/polar_coord_24.png" alt="polar coord 24" /></p></td>
+<td style="text-align: left;"><p>Switch between polar and Cartesian
+coordinate display in the status bar.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/unit_inch_24.png" alt="unit inch 24" /></p>
+<p><img src="images/icons/unit_mil_24.png" alt="unit mil 24" /></p>
+<p><img src="images/icons/unit_mm_24.png" alt="unit mm 24" /></p></td>
+<td style="text-align: left;"><p>Display/entry of coordinates and
+dimensions in inches, mils, or millimeters.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/cursor_shape_24.png" alt="cursor shape 24" /></p></td>
+<td style="text-align: left;"><p>Switches between full-screen and small
+editing cursor (crosshairs).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img src="images/icons/hv45mode_24.png"
+alt="45deg angle wire icon" /></p></td>
+<td style="text-align: left;"><p>Switches between free angle and 45
+degree mode for placement of new tracks, zones, graphical shapes,
+dimensions, and other objects. You can also toggle between free angle
+and 45 degree mode using <span
+class="keycombo">Shift+Space</span>.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/general_ratsnest_24.png"
+alt="general ratsnest 24" /></p></td>
+<td style="text-align: left;"><p>Turns the ratsnest display
+on/off.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/curved_ratsnest_24.png"
+alt="curved ratsnest 24" /></p></td>
+<td style="text-align: left;"><p>Switches between straight and curved
+ratsnest lines.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/contrast_mode_24.png"
+alt="contrast mode 24" /></p></td>
+<td style="text-align: left;"><p>Switches the non-active layer display
+mode between Normal and Dim.</p>
+<p><strong>Note:</strong> this button will be highlighted when the
+non-active layer display mode is either Dim or Hide. In both cases,
+pressing the button will change the layer display mode to Normal. The
+Hide mode can only be accessed via the controls in the Appearance Panel
+or via the hotkey <span class="keycombo">Ctrl+H</span>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/net_highlight_24.png"
+alt="net highlight 24" /></p></td>
+<td style="text-align: left;"><p>When a net has been selected for <a
+href="#net-highlighting">highlighting</a>, switches the highlighting on
+or off.</p>
+<p><strong>Note:</strong> this button will be disabled when no net has
+been highlighted. To highlight a net, use the hotkey `, right-click any
+copper object in the net and choose Highlight Net from the Net Tools
+menu, or right-click the net in the list in the Nets tab of the
+Appearance panel.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/show_zone_24.png" alt="show zone 24" /></p></td>
+<td style="text-align: left;"><p>Show zone filled areas.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/show_zone_disable_24.png"
+alt="show zone disable 24" /></p></td>
+<td style="text-align: left;"><p>Show zone outlines only.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/pad_sketch_24.png" alt="pad sketch 24" /></p></td>
+<td style="text-align: left;"><p>Switches display of pads between filled
+and outline mode.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/via_sketch_24.png" alt="via sketch 24" /></p></td>
+<td style="text-align: left;"><p>Switches display of vias between filled
+and outline mode.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img
+src="images/icons/showtrack_24.png" alt="showtrack 24" /></p></td>
+<td style="text-align: left;"><p>Switches display of tracks between
+filled and outline mode.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><img
+src="images/icons/layers_manager_24.png"
+alt="layers manager 24" /></p></td>
+<td style="text-align: left;"><p>Shows or hides the <a
+href="#appearance-panel">Appearance</a> and <a
+href="#selection">Selection Filter</a> panels on the right side of the
+editor.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><img src="images/icons/tools_24.png"
+alt="tools 24" /></p></td>
+<td style="text-align: left;"><p>Shows or hides the <a
+href="#editing-object-properties">Properties Manager</a> panel on the
+left side of the editor.</p></td>
+</tr>
+</tbody>
+</table>

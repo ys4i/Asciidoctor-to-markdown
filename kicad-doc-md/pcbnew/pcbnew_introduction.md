@@ -1,0 +1,175 @@
+# Introduction to the KiCad PCB Editor
+
+The KiCad PCB Editor is a PCB layout application distributed as a part
+of KiCad and available for the following operating systems:
+
+- Linux
+
+- Apple macOS
+
+- Windows
+
+Regardless of the OS, all KiCad files are 100% compatible from one OS to
+another.
+
+The PCB Editor is an integrated application where all functions of
+placing footprints, routing tracks, library management, and data
+transfer to and from the schematic capture software are carried out
+within the editor itself.
+
+The KiCad PCB Editor is intended to communicate directly with the KiCad
+Schematic Editor for designing printed circuit boards from schematics
+without using any intermediate files. It can also import netlist files,
+which list all the electrical connections, from other packages.
+
+The PCB Editor includes a footprint library editor, which can create and
+edit footprints and manage libraries. It also integrates the following
+additional but essential functions needed for modern PCB design
+software:
+
+- Design rules check (DRC) for automatic detection of design rule
+  violations such as incorrect and missing connections, copper clearance
+  and minimum width violations, and many other design issues
+
+- Scriptable design rules for specifying rules with complex constraints
+  and conditions
+
+- An interactive router with multiple modes of operation
+  (push-and-shove, walkaround, highlight collisions) and support for
+  differential pair routing as well as length and skew tuning
+
+- Export of fabrication and plot files in many formats (Gerber,
+  IPC-2581, ODB++, GenCAD, PDF, PostScript, and SVG)
+
+- A 3D viewer and 3D model generation in many formats (STEP, GLB, BREP,
+  XAO, PLY, STL, IDF, and VRML)
+
+## Initial configuration
+
+When the PCB Editor is run for the first time, if the global footprint
+table file `fp-lib-table` is not found in the KiCad configuration folder
+then the KiCad will ask how to create this file:
+
+<figure>
+<img src="images/en/fp_lib_table_initial_setup.png"
+alt="footprint library table initial setup dialog" />
+</figure>
+
+The first option is recommended (**Copy default global footprint library
+table (recommended)**). The default footprint library table includes all
+of the standard footprint libraries that are installed as part of KiCad.
+
+If this option is disabled, KiCad was unable to find the default global
+footprint library table. This probably means you did not install the
+standard footprint libraries with KiCad, or they are not installed where
+KiCad expects to find them. On some systems the KiCad libraries are
+installed as a separate package.
+
+- If you have installed the standard KiCad footprint libraries and want
+  to use them, but the first option is disabled, select the second
+  option and browse to the `fp-lib-table` file in the directory where
+  the KiCad libraries were installed.
+
+- If you already have a custom footprint library table that you would
+  like to use, select the second option and browse to your
+  `fp-lib-table` file.
+
+- If you want to construct a new footprint library table from scratch,
+  select the third option.
+
+Footprint library management, including how to re-run this initial
+configuration, is described in more detail
+[later](#managing-footprint-libraries).
+
+## The PCB Editor user interface
+
+<figure>
+<img src="images/pcbnew_user_interface.png" style="width:70.0%"
+alt="pcbnew user interface" />
+</figure>
+
+The main PCB Editor user interface is shown above, with some key
+elements indicated:
+
+1.  Top toolbars (file management, zoom tools, editing tools)
+
+2.  Left toolbar (display options)
+
+3.  Message panel and status bar
+
+4.  Right toolbar (drawing and design tools)
+
+5.  Appearance panel
+
+6.  Selection filter panel
+
+## Navigating the editing canvas
+
+The editing canvas is a view onto the board being designed. You can pan
+and zoom to different areas of the board, and also flip the view to show
+the board from the bottom.
+
+By default, dragging with the middle or right mouse button will pan the
+canvas view and scrolling the mouse wheel will zoom the view in or out.
+You can change this behavior in the Mouse and Touchpad section of the
+preferences (see [Configuration and
+Customization](#configuration-and-customization) for details).
+
+Several other zoom tools are available in the top toolbar:
+
+- ![Zoom In icon](images/icons/zoom_in_24.png) zooms in on the center of
+  the viewport.
+
+- ![Zoom Out icon](images/icons/zoom_out_24.png) zooms out from the
+  center of the viewport.
+
+- ![Zoom to Page icon](images/icons/zoom_fit_in_page_24.png) zooms to
+  fit the frame around the drawing sheet.
+
+- ![Zoom to Objects icon](images/icons/zoom_fit_to_objects_24.png) zooms
+  to fit the items within the drawing sheet.
+
+- ![Zoom to Selection icon](images/icons/zoom_area_24.png) allows you to
+  draw a box to determine the zoomed area.
+
+The cursor’s current position is displayed at the bottom of the window
+(X and Y), along with the current zoom factor (Z), the cursor’s relative
+position (dx, dy, and dist), the grid setting, and the display units.
+
+The relative coordinates can be reset to zero by pressing Space. This is
+useful for measuring distance between two points or aligning objects.
+
+## Hotkeys
+
+The <span class="keycombo">Ctrl+F1</span> shortcut displays the current
+hotkey list. The default hotkey list is included in the [Actions
+Reference](#pcbnew-actions-reference) section of the manual.
+
+The hotkeys described in this manual use the key labels that appear on a
+standard PC keyboard. On an Apple keyboard layout, use the Cmd key in
+place of Ctrl, and the Option key in place of Alt.
+
+Many actions do not have hotkeys assigned by default, but hotkeys can be
+assigned or redefined using the hotkey editor (**Preferences** →
+**Preferences…​** → **[Hotkeys](#preferences-controls)**).
+
+<div class="note">
+
+Many of the actions available through hotkeys are also available in
+context menus. To access the context menu, right-click in the editing
+canvas. Different actions will be available depending on what is
+selected or what tool is active.
+
+</div>
+
+Hotkeys are stored in the file `user.hotkeys` in KiCad’s configuration
+directory. The location is platform-specific:
+
+- Windows: `%APPDATA%\kicad\9.0\user.hotkeys`
+
+- Linux: `~/.config/kicad/9.0/user.hotkeys`
+
+- macOS: `~/Library/Preferences/kicad/9.0/user.hotkeys`
+
+KiCad can import hotkey settings from a `user.hotkeys` file using the
+**Import Hotkeys** button in the hotkey editor.

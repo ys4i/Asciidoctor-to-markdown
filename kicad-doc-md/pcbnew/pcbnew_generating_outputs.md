@@ -1,0 +1,770 @@
+# Generating outputs
+
+KiCad can generate and export files in a number of different formats
+useful for manufacturing PCBs and interfacing with external software.
+This functionality is available in the File menu in a few different
+sections.
+
+- The **Fabrication Outputs** section contains the most common
+  operations needed to prepare a PCB for fabrication.
+
+- The **Export** section contains tools for generating files that can be
+  read by external software.
+
+- The **Plot** function allows you to export 2D line drawings of the PCB
+  in various formats.
+
+- The **Print** function allows you to send a view of the PCB to a 2D
+  printer.
+
+## Fabrication outputs and plotting
+
+KiCad uses Gerber files as its primary plotting format for PCB
+manufacturing. To create Gerber files, open the **Plot…​** dialog from
+the **File** menu, or select **Gerbers (.gbr)…​** from the **Fabrication
+Outputs** section of the **File** menu. The Plot dialog will open,
+allowing you to configure and generate Gerber files.
+
+<figure>
+<img src="images/plot_dialog.png" style="width:70.0%"
+alt="plot dialog" />
+</figure>
+
+The **Plot** button generates output files according to the selected
+options. Messages from the plotting process are shown in the Output
+Messages panel, and can be filtered by the checkboxes.
+
+The **Generate Drill Files…​** button opens the [Generate Drill Files
+dialog](#drill-files). **Run DRC…​** opens the [Design Rules
+Checker](#design-rule-checking).
+
+### Plotting options
+
+- **Include Layers:** Check that every layer used on your board is
+  enabled in the list. Disabled layers will not be plotted.
+
+- **Plot on All Layers:** Selected layers will be included in the plot
+  for each layer selected in the **include layers** list. The additional
+  layers are plotted on top of the base layer. You can reorder these
+  layers using the arrow buttons at the bottom; items that are lower in
+  the list are plotted after (on top of) items that are higher in the
+  list.
+
+- **Output directory:** Specify the location to save plotted files. If
+  this is a relative path, it is created relative to the project
+  directory. Use the ![small new window
+  16](images/icons/small_new_window_16.png) button to open the output
+  directory in a file browser.
+
+- **Plot drawing sheet:** If enabled, the drawing sheet border and title
+  block will be plotted on each layer. This should usually be disabled
+  when plotting Gerber files.
+
+- **Subtract soldermask from silkscreen:** When enabled, silkscreen will
+  be automatically removed from board areas that aren’t covered by
+  soldermask.
+
+- **Indicate DNP on fabrication layers:** If enabled, fabrication layers
+  (`F.Fab` and `B.Fab`) will indicate when a footprint has the DNP (Do
+  Not Populate) attribute set. DNP footprints are either not plotted on
+  the fabrication layers (**Hide**) or are plotted with an X drawn
+  through them on the front and back fabrication layer (**Cross-out**).
+
+- **Sketch pads on fabrication layers:** If enabled, the outlines of
+  footprint pads will be drawn on fabrication layers (`F.Fab` or
+  `B.Fab`). If **Include pad numbers** is enabled, pad numbers will be
+  drawn as well.
+
+- **Drill marks:** For plot formats other than Gerber, marks may be
+  plotted at the location of all drilled holes. Drill marks may be
+  created at the actual size (diameter) of the finished hole, or at a
+  smaller size.
+
+- **Scaling:** For plot formats that support scaling other than 1:1, the
+  plot scale may be set. The Auto scaling setting will scale the plot to
+  fit the specified page size.
+
+- **Use drill/place file origin:** When enabled, the coordinate origin
+  for plotted files will be the drill/place file origin set in the board
+  editor. When disabled, the coordinate origin will be the absolute
+  origin (top left corner of the worksheet).
+
+- **Mirrored plot:** For some plot formats, the output may be mirrored
+  horizontally when this option is set.
+
+- **Negative plot:** For some plot formats, the output may be set to
+  negative mode. In this mode, shapes will be drawn for the empty space
+  inside the board outline, and empty space will be left where objects
+  are present in the PCB.
+
+- **Check zone fills before plotting:** When enabled, zone fills will be
+  checked (and refilled if outdated) before generating outputs. Plot
+  outputs may be incorrect if this option is disabled!
+
+<div class="note">
+
+Versions of KiCad before 9.0 had a global control for tenting vias while
+plotting. In KiCad 9.0, via tenting is globally controlled in [Board
+Setup](#board-setup), and can be overridden in the [properties
+dialog](#track-and-via-properties) for each via.
+
+</div>
+
+### Gerber options
+
+- **Use Protel filename extensions:** When enabled, the plotted Gerber
+  files will be named with file extensions based on Protel (`.GBL`,
+  `.GTL`, etc). When disabled, the files will have the `.gbr` extension.
+
+- **Generate Gerber job file:** When enabled, a Gerber job file
+  (`.gbrjob`) will be generated along with any Gerber files. The Gerber
+  job file is an extension to the Gerber format that includes
+  information about the PCB stackup, materials, and finish. More
+  information about Gerber job files is available at [the Ucamco
+  website](https://www.ucamco.com/en/gerber/gerber-job-file).
+
+- **Coordinate format:** Configure how coordinates will be stored in the
+  plotted Gerber files. Check with your manufacturer for their
+  recommended setting for this option.
+
+- **Use extended X2 format:** When enabled, the plotted Gerber files
+  will use the X2 format, which includes information about the netlist
+  and other extended attributes. This format may not be compatible with
+  older CAM software used by some manufacturers.
+
+- **Include netlist attributes:** When enabled, the plotted Gerber files
+  will include netlist information that can be used for checking the
+  design in CAM software. When X2 format mode is disabled, this
+  information is included as comments in the Gerber files.
+
+- **Disable aperture macros:** When enabled, all shapes will be plotted
+  as primitives rather than by using aperture macros. This setting
+  should only be used for compatibility with old or buggy CAM software
+  when requested by your manufacturer.
+
+### PostScript options
+
+- **Scale factor:** Controls how coordinates in the board file will be
+  scaled to coordinates in the PostScript file. Using a different value
+  for X and Y scale factors will result in a stretched / distorted
+  output. These factors may be used to correct for scaling in the
+  PostScript output device to achieve an exact-scale output.
+
+- **Track width correction:** A global factor that is added (or
+  subtracted, if negative) from the size of tracks, vias, and pads when
+  plotting a PostScript file. This factor may be used to correct for
+  errors in the PostScript output device to achieve an exact-scale
+  output.
+
+- **Force A4 output:** When enabled, the generated PostScript file will
+  be A4 size even if the KiCad board file is a different size.
+
+### SVG options
+
+- **Precision:** Controls how many significant digits will be used to
+  store coordinates.
+
+- **Output mode:** Controls whether the generated SVG file is in color
+  or black and white.
+
+- **Fit page to board:** When enabled, the generated SVG will have the
+  same size as the board outline.
+
+### DXF options
+
+- **Plot graphic items using their contours:** Graphic shapes in DXF
+  files have no width. This option controls how graphic shapes with a
+  width (thickness) in a KiCad board are plotted to a DXF file. When
+  this option is enabled, the outer contour of the shape will be
+  plotted. When this option is disabled, the centerline of the shape
+  will be plotted (and the shape’s thickness will not be visible in the
+  resulting DXF file).
+
+- **Use KiCad font to plot text:** When enabled, text in the KiCad
+  design will be plotted as graphic shapes using the KiCad font. When
+  disabled, text will be plotted as DXF text objects, which will use a
+  different font and will not appear in exactly the same position and
+  size as shown in the KiCad board editor.
+
+- **Export units:** Controls the units that will be used in the DXF
+  file. Since the DXF format has no specified units system, you must
+  export using the same units setting that you want to use for importing
+  into other software.
+
+### PDF options
+
+- **Output mode:** Controls whether the generated PDF file is in color
+  or black and white.
+
+- **Generate property popups for front footprints:** When enabled,
+  interactive popups will be added to the generated PDF containing part
+  information for each footprint on the front of the board.
+
+- **Generate property popups for back footprints:** When enabled,
+  interactive popups will be added to the generated PDF containing part
+  information for each footprint on the back of the board. For details,
+  see the [Schematic Editor
+  documentation](../eeschema/eeschema_generating_outputs.xml#interactive-pdf-features).
+
+- **Generate metadata from AUTHOR and SUBJECT variables:** Sets the
+  Author and Subject PDF document properties for the generated PDF based
+  on the `AUTHOR` and `SUBJECT` [project text
+  variables](#board-setup-text-variables), if you have defined them.
+
+- **Single document:** When enabled, each layers will be plotted as an
+  individual sheet within a single PDF document. When disabled, each
+  layer will be plotted as a separate PDF file.
+
+- **Background color:** Sets the background color for the PDF plot.
+  Background color is not available when the output mode is black and
+  white.
+
+## Drill files
+
+KiCad can generate CNC drilling files required by most PCB manufacturing
+processes in either Excellon or Gerber X2 format. KiCad can also
+generate a drill map: a graphical plot of the board showing drill
+locations. To open the dialog, select the **Drill Files (.drl)…​** option
+from the **Fabrication Outputs** section of the **File** menu, or click
+the **Generate Drill Files…​** button in the Plot dialog.
+
+<figure>
+<img src="images/generate_drill_files_dialog.png" style="width:70.0%"
+alt="generate drill files dialog" />
+</figure>
+
+- **Output folder:** Choose the folder to save generated drill and map
+  files to. If a relative path is entered, it will be relative to the
+  project directory.
+
+- **Drill file format:** Choose whether to generate Excellon drill files
+  (required by most PCB manufacturers) or Gerber X2 files.
+
+- **Mirror Y axis:** For Excellon files, choose whether or not to mirror
+  the Y-axis coordinate. This option should in general not be used when
+  having PCBs manufactured by a third party, and is provided for
+  convenience for users who are making PCBs themselves.
+
+- **Minimal header:** For Excellon files, choose whether to output a
+  minimal header rather than a full file header. This option should not
+  be enabled unless requested by your manufacturer.
+
+- **PTH and NPTH in single file:** By default, plated holes and
+  non-plated holes will be generated in two different Excellon files.
+  With this option enabled, both will be merged into a single file. This
+  option should not be enabled unless requested by your manufacturer.
+
+- **Use alternate drill mode for oval holes:** Controls how oval holes
+  are represented in an Excellon drill file. When not enabled, a route
+  command is used to represent oval holes. This is correct for most
+  manufacturers. Only choose the **Use alternate drill mode** setting if
+  requested by your manufacturer.
+
+- **Generate map:** Choose whether to generate a drill map and, if so,
+  in which format. Supported formats are Postscript, Gerber X2, DXF,
+  SVG, and PDF.
+
+- **Origin:** Choose the coordinate origin for drill files. **Absolute**
+  will use the page origin at the top left corner. **Drill/place file
+  origin** will use the origin specified in the board design.
+
+- **Drill units:** Choose the units for drill coordinates and sizes.
+
+- **Zeros:** Controls how zeroes are formatted in an Excellon drill
+  file. Select an option here based on your manufacturer’s
+  recommendations.
+
+## IPC-2581 files
+
+IPC-2581 files are XML files that contain complete fabrication and
+assembly data for a board design. If your manufacturer accepts IPC-2581
+files, these can replace Gerber files, drill files, and component
+placement files. To create an IPC-2581 file, select **IPC-2581 File
+(.xml)…​** from the **Fabrication Outputs** section of the **File** menu.
+
+<figure>
+<img src="images/generate_ipc_2581_files_dialog.png" style="width:70.0%"
+alt="generate ipc 2581 files dialog" />
+</figure>
+
+IPC-2581 output has the following options:
+
+- **File:** Choose the filename for the generated IPC-2581 file. If a
+  relative path is entered, it will be relative to the project
+  directory.
+
+- **Units:** Choose the units for the generated file. Can be
+  **millimeters** or **inches**.
+
+- **Precision:** Choose the number of digits after the decimal point for
+  numbers in the generated file.
+
+- **Version:** Choose the IPC-2581 standard version (B or C).
+
+- **Compress output:** If enabled, the generated file will be compressed
+  as a ZIP file.
+
+- **Internal ID:** Choose the footprint field to use for the BOM’s
+  internal ID column. This can be a generated unique ID or set to any
+  footprint field in the design.
+
+- **Manufacturer P/N:** Choose the footprint field to use for the BOM’s
+  manufacturer part number column. This can be omitted or set to any
+  footprint field in the design.
+
+- **Manufacturer:** Choose the footprint field to use for the BOM’s
+  manufacturer column. This can be omitted or set to any footprint field
+  in the design.
+
+- **Distributor P/N:** Choose the footprint field to use for the BOM’s
+  distributor part number column. This can be omitted or set to any
+  footprint field in the design.
+
+- **Distributor:** Choose the footprint field to use for the BOM’s
+  distributor column. This can be omitted or set to any footprint field
+  in the design.
+
+## ODB++ files
+
+ODB++ output is a database of files that contains complete fabrication
+and assembly data for a board design. If your manufacturer accepts ODB++
+files, these can replace Gerber files, drill files, and component
+placement files. To create an ODB++ file, select **ODB++ Output File…​**
+from the **Fabrication Outputs** section of the **File** menu.
+
+<figure>
+<img src="images/odb.png" alt="odb" />
+</figure>
+
+ODB++ output has the following options:
+
+- **Output file:** Choose the filename for the generated ODB++ file. If
+  a relative path is entered, it will be relative to the project
+  directory.
+
+- **Units:** Choose the units for the generated file. Can be
+  **millimeters** or **inches**.
+
+- **Precision:** Choose the number of digits after the decimal point for
+  numbers in the generated file.
+
+- **Compression format:** Choose the type of compression for the
+  generated output. Can be **ZIP**, **TGZ**, or **none**. If none, the
+  output will be a folder.
+
+## Component placement files
+
+Component placement files are text files that list each component
+(footprint) on the board along with its center position and orientation.
+These files are usually used for programming pick-and-place machines,
+and may be required by your manufacturer if you are ordering
+fully-assembled PCBs. To create placement files, select **Component
+Placement (.pos, .gbr)…​** from the **Fabrication Outputs** section of
+the **File** menu.
+
+<div class="note">
+
+A footprint will not appear in generated placement files if the "Exclude
+from position files" option is enabled for that footprint. This may be
+used for excluding certain footprints that do not represent physical
+components to be assembled. You can also optionally exclude DNP
+components, depending on your manufacturer’s requirements.
+
+</div>
+
+<figure>
+<img src="images/generate_placement_files_dialog.png"
+style="width:70.0%" alt="generate placement files dialog" />
+</figure>
+
+- **Format:** Choose between generating a plain text (ASCII),
+  comma-separated text (CSV), or Gerber X3 placement file format.
+
+- **Units:** Choose the units for component locations in the placement
+  file.
+
+- **Include only SMD footprints:** When enabled, only footprints with
+  the SMD fabrication attribute will be included. Check with your
+  manufacturer to determine if non-SMD footprints should be included or
+  excluded from the position file.
+
+- **Exclude all footprints with through hole pads:** When enabled,
+  footprints will be excluded from the placement file if they contain
+  any through-hole pads, even if their fabrication type is set to SMD.
+
+- **Exclude all footprints with the Do Not Populate flag set:** When
+  enabled, footprints will be excluded from the placement file if they
+  have the Do Not Populate attribute set. Check with your manufacturer
+  to determine if DNP components should be included or excluded from the
+  position file.
+
+- **Include board edge layer:** For Gerber placement files, controls
+  whether or not the board outline is included with the footprint
+  placement data.
+
+- **Use drill/place file origin:** When enabled, component positions
+  will be relative to the drill/place file origin set in the board
+  design. When disabled, the positions will be relative to the page
+  origin (upper left corner).
+
+- **Use negative X coordinates for footprints on bottom layer:** When
+  enabled, the X coordinates will be flipped (negated) for footprints on
+  the bottom layer.
+
+- **Generate single file with both front and back positions:** When
+  enabled, positions for front and back footprints will be saved in a
+  single file. When disabled, separate files will be generated for front
+  and back footprints.
+
+## Additional fabrication outputs
+
+KiCad can also generate footprint report files, IPC-D-356 netlist files,
+and a bill of materials (BOM) from the board design. These output
+formats have no configurable options.
+
+## Printing
+
+KiCad can print the board view to a standard printer using the Print
+action in the File menu.
+
+<figure>
+<img src="images/print_dialog.png" style="width:70.0%"
+alt="print dialog" />
+</figure>
+
+- **Include layers:** Select the layers to include in the printout.
+  Unselected layers will be invisible. Right-click the list for layer
+  selection commands.
+
+- **Output mode:** Choose whether to print in black and white or full
+  color.
+
+- **Print drawing sheet:** When enabled, the page border and title block
+  will be printed.
+
+- **Print according to objects tab of appearance manager:** When
+  enabled, any objects that have been hidden in the Objects tab of the
+  Appearance panel will be hidden in the printout. When disabled, these
+  objects will be printed if the layer they appear on is selected in the
+  Included Layers area.
+
+- **Print background color:** When printing in full color, this option
+  controls whether or not the view background color will be printed.
+
+- **Use a different color theme for printing:** When printing in full
+  color, this option allows a different color theme to be used for
+  printing. When disabled, the color theme used by the board editor will
+  be used for printing.
+
+- **Drill marks:** Controls whether to show drilled holes at their
+  actual size, at a small size, or hide them from the printout.
+
+- **Print mirrored:** When enabled, the printout will be mirrored
+  horizontally.
+
+- **Print one page per layer:** When enabled, each layer selected in the
+  Included Layers area will be printed to an individual page. If this
+  option is enabled, the **Print board edges on all pages** option
+  controls whether to add the Edge.Cuts layer to each printed page.
+
+- **Scale:** controls the scale of the printout relative to the page
+  size configured in Page Setup.
+
+## Exporting files
+
+KiCad can export a board design to various third-party formats for use
+with external software. These functions are found in the **Export**
+section of the **File** menu.
+
+### Specctra DSN exporter
+
+The Specctra DSN exporter creates a file suitable for importing into
+certain third-party autorouter software. This exporter has no
+configurable options.
+
+### GenCAD exporter
+
+The GenCAD exporter creates a GenCAD file for fabrication, testing, or
+importing into other software.
+
+<figure>
+<img src="images/gencad_exporter.png" alt="gencad exporter" />
+</figure>
+
+The GenCAD exporter has several options.
+
+- **Flip bottom footprint padstacks:** If enabled, separate flipped
+  padstack definitions will be added for bottom-side footprints. This
+  may be necessary for importing into some third-party software.
+
+- **Generate unique pin names:** If enabled, a suffix will be added to
+  each pin name so that no footprint in the generated file will have two
+  pins with the same name.
+
+- **Generate a new shape for each footprint instance:** If enabled, a
+  unique footprint will be output for every footprint instance, even if
+  two footprints are identical.
+
+- **Use drill/place file origin as origin:** If enabled, coordinates in
+  the generated file will be relative to the drill/place file origin.
+
+- **Save the origin coordinates in the file:** If enabled, the selected
+  origin coordinates will be included in the generated file. If not
+  enabled, the origin in the generated file will be set to (0,0).
+
+### VRML exporter
+
+The VRML exporter creates a VRML (`.wrl`) 3D model file containing the
+PCB and any VRML files specified in footprints. VRML models are suitable
+for use in applications where visual appearance is important and
+dimensional accuracy is not critical.
+
+<figure>
+<img src="images/vrml_exporter.png" alt="vrml exporter" />
+</figure>
+
+The VRML exporter has several options.
+
+- **Coordinate origin options:** Selects the origin for the generated
+  model. If **user defined origin** is selected, you can manually
+  specify the origin point.
+
+- **Units:** Selects the unit system for the generated model. Dimensions
+  in the generated model will be scaled appropriately.
+
+- **Ignore 'Do not populate' components:** If enabled, VRML files for
+  footprints with the 'Do not populate' attribute set will not be
+  included.
+
+- **Ignore 'Unspecified' components:** If enabled, VRML files for
+  footprints with the 'Unspecified' footprint type will not be included.
+
+- **Copy 3D model files to 3D model path:** If enabled, VRML files
+  referenced in footprints will be copied into a subdirectory of the
+  directory containing the generated board VRML model, and the generated
+  model will reference the copied files. The subdirectory name is set by
+  the **footprint 3D model path** field. If disabled, VRML files
+  referenced in footprints will be embedded in the generated VRML files.
+
+- **Use relative paths to model files in board VRML file:** If enabled,
+  references to external models will use paths relative to the generated
+  board VRML file. If disabled, the references will use absolute paths.
+  This option is only available when the **copy 3D model files to 3D
+  model path** option is enabled.
+
+### IDF exporter
+
+The IDF exporter exports an
+[IDFv3](http://www.simplifiedsolutionsinc.com/images/idf_v30_spec.pdf)
+compliant board (`.emn`) and library (`.emp`) file for communicating
+mechanical dimensions to a mechanical CAD package. The exporter exports
+the board outline and cutouts, all pad and mounting through holes
+including slotted holes, and component outlines; this is the most basic
+set of mechanical data required for interaction with mechanical
+designers. All other entities described in the IDFv3 specification are
+currently not exported.
+
+<div class="note">
+
+You must attach IDF component models to your design’s footprints before
+they will be included in the exported model. For more information on
+attaching models to footprints, see the [footprint
+documentation](#creating-and-editing-footprints). Some IDF-specific
+guidance is included in the [Advanced Topics
+documentation](#idf-component-outlines).
+
+</div>
+
+<div class="note">
+
+For more information on creating IDF component models, including
+descriptions of the IDF utility tools included with KiCad, see the
+[Advanced Topics documentation](#idf-component-outlines).
+
+</div>
+
+Once models have been specified for all desired components, the model of
+the board can be exported. In the PCB Editor, select **File** →
+**Export** → **IDFv3…​**.
+
+<figure>
+<img src="images/idf_export.png" style="width:70.0%"
+alt="IDF output settings" />
+</figure>
+
+- **Grid reference point:** Choose where the exported model’s reference
+  point should be. If the **Adjust automatically** option is selected,
+  KiCad will set the reference point to the centroid of the PCB.
+  Otherwise, the reference point is set relative to the display origin.
+
+- **Output units:** Choose whether the exported model’s units are
+  millimeters or mils.
+
+- **Ignore 'Do not populate' components:** If enabled, IDF files for
+  footprints with the 'Do not populate' attribute set will not be
+  included.
+
+- **Ignore 'Unspecified' components:** If enabled, IDF files for
+  footprints with the 'Unspecified' footprint type will not be included.
+
+The outputs can be viewed directly in a mechanical CAD application or
+converted to VRML using the [`idf2vrml` tool](#idf2vrml).
+
+### 3D model exporter (STEP / GLB / BREP / XAO / PLY / STL / STPZ)
+
+The 3D model exporter creates a 3D model file from the PCB and any STEP
+files specified in footprints. A number of formats are supported:
+
+- STEP
+
+- GLB (binary glTF)
+
+- BREP (OCCT-native boundary representation)
+
+- XAO (SALOME/Gmsh)
+
+- PLY
+
+- STL
+
+- STPZ (GZIP-compressed STEP)
+
+Different formats may be appropriate for different usecases. For
+example, STEP models are suitable for use in mechanical CAD
+applications, while XAO models are useful for physical simulations.
+
+<div class="note">
+
+KiCad’s footprint library includes both STEP and VRML (`.wrl`) versions
+of each model. However, footprints in KiCad’s library only reference the
+VRML versions of the models. VRML models are not included in STEP
+exports, but the STEP exporter will instead include the corresponding
+STEP version of the model if the **subsitute similarly named models**
+option is enabled.
+
+</div>
+
+<div class="note">
+
+KiCad can also export 3D models in [VRML](#vrml-exporter) and
+[IDF](#idf-exporter) formats, but these formats use separate exporters.
+
+</div>
+
+To use the 3D model exporter, click **File** → **Export** → **STEP / GLB
+/ BREP / XAO / PLY / STL…​**.
+
+<figure>
+<img src="images/step_exporter.png" alt="step exporter" />
+</figure>
+
+Choose a 3D model format from the **Format** dropdown menu and specify
+an output filename in the **File** selector.
+
+There are a number of options for configuring the output model.
+
+#### Board options
+
+- **Export board body:** If enabled, the board body (non-copper) will be
+  modeled in the exported model.
+
+- **Cut vias in board body:** If enabled, via holes will be cut in the
+  board body even if conductor layers are not modeled.
+
+- **Export silkscreen:** If enabled, silkscreen will be modeled in the
+  exported model. Silkscreen is modeled as a set of flat faces; it is
+  not three-dimensional.
+
+- **Export solder mask:** If enabled, solder mask will be modeled in the
+  exported model. Solder mask is modeled as a set of flat faces; it is
+  not three-dimensional.
+
+- **Export components:** If enabled, 3D models for components will be
+  included in the exported model (but see **Substitute similarly named
+  models**, below). If **All components** is selected, models for all
+  components in the PCB will be included. If **Only selected** is
+  chosen, only models for the footprints currently selected in the board
+  will be included. If **Components matching filter** is selected, only
+  models for footprints with references matching the filter will be
+  included. The filter supports wildcards and commas, so `C1,R*` will
+  include `C1` and all resistors.
+
+#### Conductor options
+
+- **Export tracks and vias:** If enabled, tracks and vias on outer
+  layers will be modeled in the exported model.
+
+- **Export pads:** If enabled, pads will be modeled in the exported
+  model.
+
+- **Export zones:** If enabled, zones on outer layers will be modeled in
+  the exported model.
+
+- **Export inner conductor layers:** If enabled, inner conductor layers
+  will be modeled in the exported model.
+
+- **Fuse shapes (time consuming):** If enabled, intersecting geometry
+  will be fused into a single shape. This may make the exported file
+  easier to work with in some tools, but it also significantly increases
+  the export time.
+
+- **Fill all vias:** If enabled, via holes will not be cut in conductor
+  layers.
+
+- **Net filter (supports wildcards):** If filled, only conductors
+  corresponding to nets that match the filter will be modeled. The
+  filter supports wildcards, so `/tx_*` will model `/tx_p` and `/tx_n`
+  conductors.
+
+#### Coordinates
+
+- **Coordinates:** Selects the origin for the generated model. If **user
+  defined origin** is selected, you can manually specify the origin
+  point.
+
+#### Other options
+
+- **Ignore 'Do not populate' components:** If enabled, components with
+  the DNP attribute set will not be included in the exported model.
+
+- **Ignore 'Unspecified' components:** If enabled, components with the
+  Unspecified footprint type will not be included in the exported model.
+
+- **Substitute similarly named models:** VRML models cannot be used in
+  STEP, BREP, or XAO exports, but if this option is enabled the exporter
+  will look for an identically named STEP model to include in the export
+  instead of a footprint’s specified VRML model. Note that footprints in
+  KiCad’s footprint library specify VRML models, but suitably named STEP
+  models are also included for each VRML model. Therefore this option
+  must be enabled in order to export 3D models for footprints from
+  KiCad’s library using this dialog.
+
+- **Overwrite old file:** If enabled, the exported model will overwrite
+  an existing file with the same name.
+
+- **Don’t write P-curves to STEP file** If enabled, parametric curves
+  will be disabled in the exported STEP/STPZ model. This reduces the
+  file size, but may reduce compatibility with some software.
+
+- **Board outline chaining tolerance:** Controls the minimum distance
+  between two points for the points to be considered coincident. If the
+  board outline in the exported model is not contiguous, try increasing
+  this tolerance.
+
+### Footprint association (CMP) exporter
+
+CMP files are used to sync footprint assignments and some other
+footprint fields between the PCB and the schematic. You can import CMP
+files into the schematic using the schematic editor’s **File** →
+**Import** → **Footprint Assignments** menu item. This provides a very
+limited form of [back
+annotation](../eeschema/eeschema.xml#backannotation). It is recommended
+to use the Update Schematic from PCB tool instead.
+
+This exporter has no configurable options.
+
+### Hyperlynx exporter
+
+The Hyperlynx exporter creates a file suitable for importing into Mentor
+Graphics (Siemens) HyperLynx simulation and analysis software. This
+exporter has no configurable options.

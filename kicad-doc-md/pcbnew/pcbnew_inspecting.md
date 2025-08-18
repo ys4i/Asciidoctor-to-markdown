@@ -1,0 +1,1435 @@
+# Inspecting a board
+
+## Design rules checking
+
+The Design Rules Checker (DRC) tool is used to verify that the PCB meets
+all the requirements established in the Board Setup dialog and that all
+pads are connected according to the netlist or schematic. KiCad can
+automatically prevent some design rule violations while routing tracks,
+but many others cannot be prevented automatically. This means it is
+important to use the design rule checker before creating manufacturing
+files for a PCB.
+
+To use the design rule checker, click the ![erc
+24](images/icons/erc_24.png) icon in the top toolbar, or select **Design
+Rules Checker** from the **Inspect** menu.
+
+<figure>
+<img src="images/drc_control.png" style="width:70.0%"
+alt="drc control" />
+</figure>
+
+The top section of the DRC Control window contains some options that
+control the design rule checker:
+
+**Refill all zones before performing DRC:** when enabled, zones will be
+refilled every time the design rule checker is run. Disabling this
+option may result in incorrect DRC results if zones have not been
+refilled manually.
+
+**Report all errors for each track:** when enabled, all clearance errors
+will be reported for each track segment. When disabled, only the first
+error will be reported. Enabling this option will result in the design
+rule checker running more slowly.
+
+**Test for parity between PCB and schematic:** when enabled, the design
+rule checker will test for differences between the schematic and PCB in
+addition to testing the PCB design rules. This option has no effect when
+running the PCB editor in standalone mode.
+
+After running DRC, any violations will be shown in the center part of
+the DRC window. Rule violations, unconnected items, and differences
+between the schematic and the PCB are shown in three different tabs. A
+list of the ignored tests is shown in the fourth tab. A report file in
+plain text format can be created after running DRC using the **Save…​**
+button.
+
+<figure>
+<img src="images/drc_violations.png" style="width:70.0%"
+alt="drc violations" />
+</figure>
+
+Each violation involves one or more objects on the PCB. In the list of
+violations, the objects involved are listed below the violation.
+Clicking on the violation in the list view will move the PCB Editor view
+so that the affected area is centered. Clicking on one of the objects
+involved in a violation will highlight the object.
+
+Certain types of violations have contextual actions in the context menu.
+For example, clearance violations have an action to run the [clearance
+resolution tool](#clearance-and-constraint-resolution) on the violating
+items, while custom rule violations have an action to run the
+[constraint resolution tool](#clearance-and-constraint-resolution). For
+board vs. library footprint mismatch violations, there is an action to
+run the [Compare Footprint with Library](#comparing-footprints) tool.
+These actions can help to quickly identify the reason for a particular
+violation.
+
+The numbers at the bottom of the window show the number of errors,
+warnings, and exclusions. Each type of violation can be filtered from
+the list using the respective checkboxes. Clicking **Delete Marker**
+will clear the selected violation until DRC is run again, while clicking
+**Delete All Markers** will clear all violations until the next DRC run.
+
+Violations can be right-clicked in the dialog to ignore them or change
+their severity:
+
+- **Exclude this violation:** ignores this particular violation, but
+  does not affect any other violations. You can un-exclude a violation
+  by right clicking the excluded violation and selecting **Remove
+  exclusion for this violation**.
+
+- **Exclude with comment…​:** the same as **Exclude this violation**, but
+  prompts for a comment explaining the reason for the exclusion. When
+  excluded violations are unhidden (using the **Exclusions** checkbox),
+  exclusion comments are shown with the corresponding excluded
+  violation. To edit an existing exclusion comment or add a comment to
+  an existing exclusion, right click an excluded violation and select
+  **Edit exclusion comment…​**.
+
+- **Exclude all violations of rule:** the same as **Exclude this
+  violation**, but excludes *all* violations caused by the same [custom
+  DRC rule](#custom-design-rules). This action only appears in the
+  context menu for violations caused by custom design rules. If you
+  right click on a custom design rule violation that is already
+  excluded, you can instead **Remove all exclusions for violations of
+  rule**.
+
+- **Change severity:** changes a type of violation from warning to
+  error, or error to warning. This affects all violations of a given
+  type.
+
+- **Ignore all:** ignores all violations of a given type. This test will
+  now appear in the **Ignored Tests** tab rather than the **Violations**
+  tab. You can un-ignore the test again by right clicking the test in
+  the **Ignored Tests** tab, or in the [Violation Severity
+  panel](#board-setup-violation-severity) in Board Setup.
+
+- **Edit violation severities…​:** opens the [Violation Severity
+  panel](#board-setup-violation-severity) in Board Setup, for editing
+  the severities of all DRC violation types.
+
+Excluded and ignored violations are remembered between runs of the
+design rule checker. Excluded violations are hidden unless the
+**Exclusions** checkbox is enabled. Ignored violations are not shown,
+but there is a list of ignored tests in the **Ignored Tests** tab.
+
+### Clearance and constraint resolution
+
+The clearance and constraint resolution tools allow you to inspect which
+clearance and design constraint rules apply to selected items. These
+tools can help when designing PCBs with complex design rules where it is
+not always clear which rules apply to an object.
+
+To inspect the clearance rules that apply between two objects, select
+both objects and choose **Clearance Resolution** from the **Inspect**
+menu. The Clearance Report dialog will show the clearance required
+between the objects on each copper layer, as well as the design rules
+that resulted in that clearance.
+
+<figure>
+<img src="images/clearance_resolution.png" style="width:70.0%"
+alt="clearance resolution" />
+</figure>
+
+To inspect the design constraints that apply to an object, select it and
+choose **Constraints Resolution** from the **Inspect** menu. The
+Constraints Report dialog will show any constraints that apply to the
+object.
+
+<figure>
+<img src="images/constraints_resolution.png" style="width:70.0%"
+alt="constraints resolution" />
+</figure>
+
+### DRC configuration
+
+The severity of each DRC check can be configured in the **Violation
+Severity** section of the [Board Setup
+dialog](#board-setup-violation-severity). Each rule may be set to create
+an error marker, a warning marker, or no marker (ignored).
+
+<div class="note">
+
+Individual rule violations may be ignored in the Design Rule Checker.
+Setting a rule to Ignore in the Violation Severity section will
+completely disable the corresponding design rule check. Use this setting
+with caution.
+
+</div>
+
+<figure>
+<img src="images/board_setup_violation_severity.png" style="width:70.0%"
+alt="board setup violation severity" />
+</figure>
+
+### List of DRC checks
+
+The table below lists the design rules that KiCad checks and the default
+violation severity for each check. All severities are configurable. Some
+design are only available through [custom design
+rules](#custom-design-rules).
+
+#### Electrical DRC checks
+
+These DRC checks look for gross electrical issues on the board such as
+shorts and clearance violations.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Items shorting two nets</p></td>
+<td style="text-align: left;"><p>This violation occurs when copper items
+on different nets collide with each other. If this is intentional,
+consider using a <a href="#net-ties">net tie</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Tracks crossing</p></td>
+<td style="text-align: left;"><p>This violation occurs when tracks with
+different nets cross each other.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Clearance violation</p></td>
+<td style="text-align: left;"><p>This violation occurs when the distance
+between two copper items with different nets is smaller than the
+configured clearance for those nets. The allowed clearance between two
+items can come from the <a href="#board-setup-constraints">board-level
+minimum clearance</a>, the <a href="#board-setup-net-classes">net class
+settings</a> for each net, or from <a href="#custom-design-rules">custom
+rules</a>. To see detailed information about the configured and actual
+clearances between two selected items, run the <a
+href="#clearance-and-constraint-resolution">clearance resolution</a>
+tool, which is available by right clicking the violation in the DRC
+window. The minimum clearance path is highlighted in the editing canvas
+when a clearance violation is selected in the DRC window.</p>
+<p>This violation is also reported when the distance between two items
+is smaller than the configured physical clearance for those two items.
+Physical clearance constraints are not configured by default; see the <a
+href="#custom-design-rules">custom rule</a> documentation for how to
+configure physical clearance.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Creepage violation</p></td>
+<td style="text-align: left;"><p>This violation occurs when the creepage
+distance between two copper items with different nets is smaller than
+the configured creepage for those nets. Creepage paths are highlighted
+in the editing canvas when a creepage violation is selected in the DRC
+window.</p>
+<p>Creepage distances can be configured using a <code>creepage</code>
+constraint in <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Via is not connected or is connected on
+only one layer</p></td>
+<td style="text-align: left;"><p>This violation occurs when a via is
+connected to copper objects on only one layer or is not connected to
+anything. As vias are intended to connect copper objects on different
+layers, this may indicate that an intended connection is
+missing.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Track has unconnected end</p></td>
+<td style="text-align: left;"><p>This violation occurs when the end of a
+track segment is not connected to another copper object, such as another
+track segment, a via or pad, or a zone or copper graphical
+shape.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Thermal relief connection to zone
+incomplete</p></td>
+<td style="text-align: left;"><p>This violation occurs when a pad’s
+connection to a zone does not have enough connected thermal relief
+spokes. The minimum allowed number of spokes can come from the <a
+href="#board-setup-constraints">board-level minimum thermal relief spoke
+count</a> or can be configured with more granularity using <a
+href="#custom-design-rules">custom rules</a>.</p>
+<p>This check counts automatically generated spokes as well as manually
+drawn connections, so if the pad and zone geometry prevent enough spokes
+from being generated, you can manually add additional connections using
+tracks between the pad and the zone.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+</tbody>
+</table>
+
+#### Design for manufacturing DRC checks
+
+These DRC checks look for issues in the board that may cause
+manufacturing problems.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Board edge clearance violation</p></td>
+<td style="text-align: left;"><p>This violation occurs when the distance
+between a copper object and the board edge is smaller than the
+configured copper to edge clearance for those items. For the purposes of
+this check, oval holes (which are routed rather than drilled) are
+counted as board edges in addition to any graphic items on the
+<code>Edge.Cuts</code> layer.</p>
+<p>The allowed edge clearance between two items can come from the <a
+href="#board-setup-constraints">board-level minimum copper to edge
+clearance</a> or from <a href="#custom-design-rules">custom rules</a>. A
+negative edge clearance allows objects to overlap with the board edge.
+To see detailed information about the configured and actual edge
+clearances between two selected items, run the <a
+href="#clearance-and-constraint-resolution">clearance resolution</a>
+tool.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Hole clearance violation</p></td>
+<td style="text-align: left;"><p>This violation occurs when the distance
+between a hole (pad or via) and another copper object (pad, track, via,
+or zone) is smaller than the configured copper to hole clearance for
+those objects. Objects are only considered in this check if they have
+layers in common. The allowed hole clearance between two items can come
+from the <a href="#board-setup-constraints">board-level minimum copper
+to hole clearance</a> or from <a href="#custom-design-rules">custom
+rules</a>. To see detailed information about the configured and actual
+hole clearances between two selected items, run the <a
+href="#clearance-and-constraint-resolution">clearance resolution</a>
+tool.</p>
+<p>This violation is also reported when the distance between a hole and
+another object is smaller than the configured physical hole clearance
+for those two items. Physical hole clearance constraints are not
+configured by default; see the <a href="#custom-design-rules">custom
+rule</a> documentation for how to configure physical hole
+clearance.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Drilled hole too close to other
+hole</p></td>
+<td style="text-align: left;"><p>This violation occurs when the distance
+between a drilled hole and another hole is smaller than the configured
+hole to hole clearance.</p>
+<p>Through vias, blind/buried vias, and through holes in pads are
+considered drilled holes because the holes are made with a physical
+drill bit, which can shift or be damaged if other holes (drilled or
+otherwise) are too close. Micro vias are not considered drilled holes
+because they are drilled using a laser, which is not affected by other
+nearby holes. At least one of the holes must be mechanically drilled in
+order to be considered in this check.</p>
+<p>Blind/buried vias are only considered in this check when they share
+layers with the other hole.</p>
+<p>Non-circular holes are not included in this check because they are
+routed rather than drilled. Routing is typically performed after holes
+are drilled and with a stronger tool.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Drilled holes co-located</p></td>
+<td style="text-align: left;"><p>This violation occurs when a drilled
+hole and another hole are in the exact same location.</p>
+<p>The same types of holes are considered in this check as for the
+"Drilled hole too close to other hole" check.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Track width</p></td>
+<td style="text-align: left;"><p>This violation occurs when the width of
+a track is outside of the configured range. The allowed width for a
+track can come from the <a href="#board-setup-constraints">board-level
+minimum track width</a> or from <a href="#custom-design-rules">custom
+rules</a>.</p>
+<p>Note that an optimal track width can be configured for each net class
+in the <a href="#board-setup-net-classes">net class settings</a>, which
+sets a track width for the interactive router to use, but it does not
+set a minimum and maximum track width. No DRC violations will be
+reported for net class track width settings unless a minimum and/or
+maximum are configured using custom rules.</p>
+<p>To see detailed information about the configured track width for a
+particular track, run the <a
+href="#clearance-and-constraint-resolution">constraints resolution</a>
+tool.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Track angle</p></td>
+<td style="text-align: left;"><p>This violation occurs when the angle
+between two connected track segments is outside the configured
+range.</p>
+<p>Minimum and/or maximum allowable track angles can be configured using
+a <code>track_angle</code> constraint in <a
+href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Track segment length</p></td>
+<td style="text-align: left;"><p>This violation occurs when the length
+of a track segment is outside the configured range.</p>
+<p>Minimum and/or maximum allowable track segment lengths can be
+configured using a <code>track_segment_length</code> constraint in <a
+href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Annular width</p></td>
+<td style="text-align: left;"><p>This violation occurs when a pad or
+via’s annular width is outside of the configured range.</p>
+<p>Board-level minimum annular width can be configured in <a
+href="#board-setup-constraints">board setup constraints</a>. Board-level
+maximum width, as well as more specific rules, can be configured using
+<a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Hole size out of range</p></td>
+<td style="text-align: left;"><p>This violation occurs when a drilled
+hole’s diameter is outside of the configured range.</p>
+<p>This check represents the smallest hole that can be drilled, i.e. the
+smallest drill bit size the manufacturer will use. This check therefore
+includes through vias, blind/buried vias, and through holes in pads.
+Micro vias are not included in this check because they are made using a
+laser rather than a physical drill bit.</p>
+<p>Board-level minimum through hole size can be configured in <a
+href="#board-setup-constraints">board setup constraints</a>. Board-level
+maximum hole size, as well as more specific rules, can be configured
+using <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Micro via hole size out of
+range</p></td>
+<td style="text-align: left;"><p>This violation occurs when a micro
+via’s hole diameter is outside of the configured range.</p>
+<p>This check represents the smallest hole that can be laser drilled and
+therefore only applies to micro vias.</p>
+<p>Board-level minimum micro via hole size can be configured in <a
+href="#board-setup-constraints">board setup constraints</a>. Board-level
+maximum hole size, as well as more specific rules, can be configured
+using <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Courtyards overlap</p></td>
+<td style="text-align: left;"><p>This violation occurs when a
+footprint’s courtyard overlaps with another footprint’s courtyard. A
+nonzero clearance between two courtyards can be configured using a
+<code>courtyard_clearance</code> constraint in <a
+href="#custom-design-rules">custom rules</a>. A negative courtyard
+clearance allows courtyards to intersect.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Footprint has no courtyard
+defined</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+does not contain any graphic shapes on its <code>F.Courtyard</code> or
+<code>B.Courtyard</code> layers.</p></td>
+<td style="text-align: left;"><p>Ignore</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Footprint has malformed
+courtyard</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+has a courtyard containing non-closed shapes. Courtyards may contain
+multiple unconnected shapes without being considered malformed, as long
+as each shape is individually closed.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Board has malformed outline</p></td>
+<td style="text-align: left;"><p>This violation occurs when the shapes
+on the <code>Edge.Cuts</code> layer do not form a valid board outline.
+Valid board outlines consist of closed shapes that do not
+self-intersect. Board outlines may contain multiple unconnected shapes
+without being considered malformed, as long as each shape is
+individually closed and does not intersect with itself or other shapes.
+This check also reports very small (nanometer-scale) graphic shapes on
+the <code>Edge.Cuts</code> layer, which are difficult to find visually
+but may cause issues in other tools.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Copper sliver</p></td>
+<td style="text-align: left;"><p>This violation occurs when small,
+wedge-shaped protrusions of copper are detected. These slivers can cause
+manufacturing, reliability, or electrical issues.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Solder mask aperture bridges items with
+different nets</p></td>
+<td style="text-align: left;"><p>This violation occurs when a single
+opening in the soldermask exposes multiple copper items with different
+nets. This can result in solder shorting the two copper items during
+assembly.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Copper connection too narrow</p></td>
+<td style="text-align: left;"><p>This violation occurs when a copper
+connection necks down to a width that is narrower than the configured
+minimum connection width. The minimum connection width setting can come
+from the <a href="#board-setup-constraints">board-level minimum
+connection width</a> or can be configured with more granularity using <a
+href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+</tbody>
+</table>
+
+#### Schematic parity DRC checks
+
+These DRC checks look for differences between the schematic and the
+board.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Duplicate footprints</p></td>
+<td style="text-align: left;"><p>This violation occurs when the board
+contains multiple footprints with the same reference designator are in
+the board. It is not reported if the footprints do not correspond to
+schematic symbols, however (if the footprints only exist in the
+board).</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Missing footprint</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+is not in the board but is expected based on a corresponding symbol in
+the schematic.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Extra footprint</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+is in the board without a corresponding symbol in the
+schematic.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Footprint attributes don’t match
+symbol</p></td>
+<td style="text-align: left;"><p>This violation occurs when a
+footprint’s <code>Value</code> field, "DNP" attribute, or "Exclude from
+BOM" attribute are set differently than the corresponding
+field/attribute in the matching schematic symbol. It also occurs when a
+symbol’s assigned footprint is different than the actual footprint in
+the board.</p>
+<p>Typically this is fixed by performing an <a
+href="#forward-annotation">Update PCB from Schematic</a> or <a
+href="#reverse-annotation">Update Schematic from PCB</a> action to sync
+the fields and attributes, depending on whether the symbol or footprint,
+respectively, is correct.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Footprint doesn’t match symbol’s
+footprint filters</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+does not match footprint filters in the corresponding symbol. If the
+symbol doesn’t have any footprint filters, no violation occurs.</p></td>
+<td style="text-align: left;"><p>Ignore</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pad net doesn’t match
+schematic</p></td>
+<td style="text-align: left;"><p>This violation occurs when a net does
+not match between a footprint pad and the corresponding symbol pin. This
+can be because the symbol pin’s net is different than the footprint
+pad’s net, because the footprint pad does not have a corresponding
+symbol pin, or because the symbol pin does not have a corresponding
+footprint pad.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Missing connection between
+items</p></td>
+<td style="text-align: left;"><p>This violation occurs when two copper
+objects with the same net are not connected on the board.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+</tbody>
+</table>
+
+#### Signal integrity DRC checks
+
+These DRC checks look for signal integrity issues in the board.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Track length out of range</p></td>
+<td style="text-align: left;"><p>This violation occurs when a track in a
+differential pair is too long or too short compared to the configured
+minimum and maximum length for that track. The allowable track length
+for different tracks can be configured using the <code>length</code>
+constraint in <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Skew between tracks out of
+range</p></td>
+<td style="text-align: left;"><p>This violation occurs when the
+difference between the length of a track and the maximum length of all
+tracks being considered is longer than the configured maximum skew for
+that set of tracks. For calculating the skew of a differential pair (two
+tracks), the skew therefore is calculated as the length difference
+between tracks.</p>
+<p>The allowable maximum skew for a set of tracks, as well as which
+tracks the rule applies to, can be configured using the
+<code>skew</code> constraint in <a href="#custom-design-rules">custom
+rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Too many or too few vias on a
+connection</p></td>
+<td style="text-align: left;"><p>This violation occurs when the number
+of vias assigned to a net is too low or too high compared to the
+configured minimum and maximum for that net. The allowable via count for
+different nets can be configured using the <code>via_count</code>
+constraint in <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Differential pair gap out of
+range</p></td>
+<td style="text-align: left;"><p>This violation occurs when the gap
+between the two tracks in a differential pair is too small or too large
+compared to the configured minimum and maximum for that differential
+pair. The gap is only checked on coupled (i.e. parallel) portions of the
+differential pair.</p>
+<p>The minimum and maximum allowable gap for a differential pair can be
+configured using the <code>diff_pair_gap</code> constraint in <a
+href="#custom-design-rules">custom rules</a>.</p>
+<p>Note that an optimal differential pair gap can be configured for each
+net class in the <a href="#board-setup-net-classes">net class
+settings</a>, which sets a gap for the differential pair router to use,
+but it does not set a minimum and maximum gap. No DRC violations will be
+reported unless a minimum and/or maximum are configured using custom
+rules.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Differential uncoupled length too
+long</p></td>
+<td style="text-align: left;"><p>This violation occurs when the portion
+of a differential pair that is uncoupled is longer than the configured
+maximum. A differential pair is considered uncoupled when its tracks are
+not parallel, for example when fanning out from a footprint.</p>
+<p>The maximum allowable uncoupled length for a differential pair can be
+configured using the <code>diff_pair_uncoupled</code> constraint in <a
+href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+</tbody>
+</table>
+
+#### Readability DRC checks
+
+These DRC checks look for issues that may affect legibility of text and
+other silkscreen objects on the board.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Silkscreen overlap</p></td>
+<td style="text-align: left;"><p>This violation occurs when a silkscreen
+object intersects another silkscreen object, which may affect
+readability. This check does not apply to silkscreen objects within the
+same footprint.</p>
+<p>The allowable distance between silkscreen objects can also be set to
+a nonzero number to enforce a silk to silk clearance using the <a
+href="#board-setup-constraints">board-level silkscreen minimum item
+clearance</a> or using <a href="#custom-design-rules">custom rules</a>.
+A negative silkscreen clearance allows silkscreen to intersect other
+objects.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Silkscreen clipped by solder
+mask</p></td>
+<td style="text-align: left;"><p>This violation occurs when a silkscreen
+object intersects a solder mask opening. This may result in silkscreen
+printed on bare copper or substrate. Board manufacturers may also
+discard any silkscreen that does not have solder mask underneath. Such
+outcomes could affect board assembly as well as silkscreen durability
+and readability.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Silkscreen clipped by board
+edge</p></td>
+<td style="text-align: left;"><p>This violation occurs when a silkscreen
+object intersects a board edge, meaning that part of the silkscreen is
+outside of the board area.</p>
+<p>The allowable distance between silkscreen and the board edge can also
+be set to a nonzero number to enforce a clearance to the board edge
+using the <a href="#board-setup-constraints">board-level silkscreen
+minimum item clearance</a> or using <a
+href="#custom-design-rules">custom rules</a>. A negative silkscreen
+clearance allows silkscreen to intersect other objects.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Text height out of range</p></td>
+<td style="text-align: left;"><p>This violation occurs when a text
+object’s text height is outside of the configured range.</p>
+<p>Board-level minimum text height can be configured in <a
+href="#board-setup-constraints">board setup constraints</a>. Board-level
+maximum height, as well as more specific rules, can be configured using
+<a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Text thickness out of range</p></td>
+<td style="text-align: left;"><p>This violation occurs when a text
+object’s text thickness is outside of the configured range. For the
+built-in KiCad stroke font, the thickness is the text thickness setting
+in the text object’s properties. For external fonts, this is the minimum
+physical thickness of all glyphs in the text object; this depends on the
+font geometry in combination with the font size, bold, and italic
+settings.</p>
+<p>Board-level minimum text thickness can be configured in <a
+href="#board-setup-constraints">board setup constraints</a>. Board-level
+maximum thickness, as well as more specific rules, can be configured
+using <a href="#custom-design-rules">custom rules</a>.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Mirrored text on front layer</p></td>
+<td style="text-align: left;"><p>This violation occurs when a text
+object on a front layer has the mirrored attribute set. When looking at
+the front of the board, the text will therefore appear
+backwards.</p></td>
+<td style="text-align: left;"><p>Ignore</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Non-Mirrored text on back
+layer</p></td>
+<td style="text-align: left;"><p>This violation occurs when a text
+object on a back layer doesn’t have the mirrored attribute set. When
+looking at the back of the board, the text will therefore appear
+backwards.</p></td>
+<td style="text-align: left;"><p>Ignore</p></td>
+</tr>
+</tbody>
+</table>
+
+#### Miscellaneous DRC checks
+
+These DRC checks look for other miscellaneous issues in the board.
+
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violation</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Items not allowed</p></td>
+<td style="text-align: left;"><p>This violation occurs when objects are
+placed in a location where they are not allowed. This can be due to a <a
+href="#pcb-rule-areas">rule area</a> with a keep out rule for the
+object’s type or due to a <code>disallow</code> <a
+href="#custom-design-rules">custom rule</a> constraint.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Copper zones intersect</p></td>
+<td style="text-align: left;"><p>This violation occurs when copper zones
+with different nets collide with each other, shorting the two
+nets.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Isolated copper fill</p></td>
+<td style="text-align: left;"><p>This violation occurs when part of a
+copper fill is not connected to any other copper items with the same
+net. This is also referred to as an island.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Footprint is not valid</p></td>
+<td style="text-align: left;"><p>This violation occurs when a
+footprint’s net tie group contains a pad that doesn’t exist in the
+footprint, or when a pad is in more than one net tie group.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Padstack is questionable</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+pad has unusual settings that are probably a mistake. The settings that
+are checked are:</p>
+<ul>
+<li><p>Plated through holes without copper pads on any layer</p></li>
+<li><p>Pads with inappropriate properties, such as through hole pads
+with the BGA property</p></li>
+<li><p>Connector pads with solder paste</p></li>
+<li><p>SMD pads with copper on both sides</p></li>
+<li><p>SMD pads with copper on the opposite side from the corresponding
+solder mask opening or solder paste</p></li>
+<li><p>SMD pads with no copper on outer layers</p></li>
+<li><p>Plated through hole pads with no copper annulus around the
+hole</p></li>
+<li><p>Plated through hole pads with hole partially or fully outside of
+the copper</p></li>
+<li><p>Potential issues with solder mask clearance</p></li>
+<li><p>Pads with negative local electrical clearance</p></li>
+<li><p>Pads with an excessively large corner chamfer/radius</p></li>
+</ul></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>PTH inside courtyard</p></td>
+<td style="text-align: left;"><p>This violation occurs if a footprint’s
+plated through hole pad is within the courtyard of another footprint.
+Pads with the "heatsink pad" fabrication property are allowed,
+however.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>NPTH inside courtyard</p></td>
+<td style="text-align: left;"><p>This violation occurs if a footprint’s
+nonplated through hole pad is within the courtyard of another
+footprint.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Item on a disabled copper
+layer</p></td>
+<td style="text-align: left;"><p>This violation occurs if an item, for
+example a pad or via, is on a copper layer that does not exist in the <a
+href="#configuring_board_stackup_and_physical_parameters">board
+stackup</a>.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Unresolved text variable</p></td>
+<td style="text-align: left;"><p>This violation occurs when a <a
+href="#text-variables">text variable</a> in the board design or drawing
+sheet does not resolve (there is no defined value for the
+variable).</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Footprint component type doesn’t match
+footprint pads</p></td>
+<td style="text-align: left;"><p>This violation occurs when a
+footprint’s component type (SMD, through hole, or unspecified) doesn’t
+match the expected type based on the footprint’s pads. If a footprint
+contains any through hole pads, it is expected to have the through hole
+component type. If it contains SMD pads and no through hole pads, its
+component type is expected to be SMD. If a footprint’s component type is
+unspecified, the footprint is not compared against its pads.</p></td>
+<td style="text-align: left;"><p>Ignore</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Footprint not found in
+libraries</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+in the board is not in an active library in <a
+href="#managing-footprint-libraries">the global library table or the
+project-specific library table</a>. This can be because the footprint’s
+library does not contain the footprint, the footprint’s library is not
+listed in either library table, or because the library is listed in a
+table but is disabled. As a consequence, you will not be able to update
+the footprint from the library or compare changes between the board and
+library versions of the footprint.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Footprint doesn’t match copy in
+library</p></td>
+<td style="text-align: left;"><p>This violation occurs when a footprint
+in the board is different than the library version of the footprint.</p>
+<p>You can compare between the board and library versions of the
+footprint using the <a href="#comparing-footprints">Compare Footprint
+with Library</a> tool, which is available by right clicking the
+violation in the DRC window. If desired, you can <a
+href="#updating_and_exchanging_footprints">update the board
+footprint</a> to match the library footprint.</p></td>
+<td style="text-align: left;"><p>Warning</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Through hole pad has no hole</p></td>
+<td style="text-align: left;"><p>This violation occurs when a through
+hole footprint pad does not have a hole.</p></td>
+<td style="text-align: left;"><p>Error</p></td>
+</tr>
+</tbody>
+</table>
+
+### User-definable DRC violations
+
+You can manually trigger board DRC warnings or errors using special
+[text variables](#text-variables). These items will appear as errors or
+warnings when DRC runs. This can be useful to flag items for later
+followup or review.
+
+To cause a DRC violation, use the text variable
+`${DRC_ERROR <violation name>}` or `${DRC_WARNING <violation name>}`
+depending on whether an error or warning is desired. You can place this
+in a text item or text box on any board layer. When DRC runs, this will
+generate a DRC violation with the given violation name. These text
+variables resolve to an empty string in the board, and any text after
+the braces is included in the DRC violation’s description. The text
+variable must be placed at the start of the text object in order to
+trigger a violation.
+
+For example, a text item containing
+`${DRC_ERROR TODO}Length match tracks` will appear in the board as just
+the text "Length match tracks", and will generate a DRC error named
+"TODO" with "Length matches tracks" in the description.
+
+### DRC report file
+
+An DRC report file can be generated and saved by clicking the **Save…​**
+button in the DRC dialog. The file extension for DRC report files is
+`.rpt`. An example DRC report file is given below.
+
+    ** Drc report for pic_programmer.kicad_pcb **
+    ** Created on 2024-11-02T15:54:52-0400 **
+
+    ** Found 4 DRC violations **
+    [starved_thermal]: Thermal relief connection to zone incomplete (layer bottom_layer; 1 spokes connected to isolated island)
+        Local override; error
+        @(223.5200 mm, 138.4300 mm): Zone [GND] on bottom_layer
+        @(175.2600 mm, 68.5800 mm): PTH pad 8 [GND] of P3
+    [starved_thermal]: Thermal relief connection to zone incomplete (layer bottom_layer; zone min spoke count 2; actual 1)
+        Local override; error
+        @(223.5200 mm, 138.4300 mm): Zone [GND] on bottom_layer
+        @(207.8990 mm, 118.1100 mm): PTH pad 5 [GND] of U5
+    [starved_thermal]: Thermal relief connection to zone incomplete (layer bottom_layer; 1 spokes connected to isolated island)
+        Local override; error
+        @(223.5200 mm, 138.4300 mm): Zone [GND] on bottom_layer
+        @(125.7300 mm, 111.7600 mm): PTH pad 10 [GND] of U2
+    [starved_thermal]: Thermal relief connection to zone incomplete (layer bottom_layer; zone min spoke count 2; actual 1)
+        Local override; error
+        @(223.5200 mm, 138.4300 mm): Zone [GND] on bottom_layer
+        @(118.1100 mm, 111.7600 mm): PTH pad 13 [GND] of U2
+
+    ** Found 0 unconnected pads **
+
+    ** Found 0 Footprint errors **
+
+    ** End of Report **
+
+## Board Statistics
+
+The Board Statistics dialog shows a summary of the board’s contents,
+including the size of the board and counts of various types of items.
+Open the Board Statistics dialog with **Inspect** → **Show Board
+Statistics**.
+
+<figure>
+<img src="images/Pcbnew_board_statistics.png" style="width:70.0%"
+alt="Pcbnew board statistics" />
+</figure>
+
+The **General** tab gives counts of various types of objects:
+
+- Footprints, separated by type (THT, SMD, or unspecified) and board
+  side
+
+- Pads, separated by type (THT, SMD, connector, or NPTH)
+
+- Vias, separated by type (through, blind/buried, or micro)
+
+It also displays the board width, height, and area.
+
+The **Drill Holes** tab lists every unique type of drill hole on the
+board. Each type of hole is listed with its characteristics (shape, X
+and Y size, plating, pad or via type, and start and stop layers) and the
+count of that type of hole.
+
+You can save the board statistics to a file by clicking the **Generate
+Report File…​** button.
+
+## Measurement tool
+
+The measurement tool allows you to make distance and angle measurements
+between points on the PCB. To activate the tool, click the ![measurement
+24](images/icons/measurement_24.png) icon in the right toolbar, or use
+the hotkey <span class="keycombo">Ctrl+Shift+M</span>. Once the tool is
+active, click once to set the measurement start point, then click again
+to finish a measurement.
+
+<figure>
+<img src="images/measurement_tool.png" alt="measurement tool" />
+</figure>
+
+The tool displays the total (radial) distance between the points, the
+distance in X and Y directions, and the measured angle from horizontal.
+In other words, both the Cartesian and radial (polar) distances are
+displayed.
+
+<div class="note">
+
+The measurement tool is used for quick measurements that do not need to
+be displayed permanently. Any measurement you make will only be shown
+while the tool is active. To create permanent dimensions that will
+appear in printouts and plots, use the Dimension tools.
+
+</div>
+
+## Find tool
+
+The Find tool searches for text in the PCB, including reference
+designators, footprint fields, and graphic text. When the tool finds a
+match, the canvas is zoomed and centered on the match and the text is
+highlighted. Launch the tool using the (![Find
+icon](images/icons/find_24.png)) button in the top toolbar.
+
+<figure>
+<img src="images/find_dialog.png" style="width:50.0%"
+alt="Find dialog" />
+</figure>
+
+The Find tool has several options:
+
+**Match case:** Selects whether the search is case-sensitive.
+
+**Whole words only:** When selected, the search will only match the
+search term with complete words in the PCB. When unselected, the search
+will match if the search term is part of a larger word in the PCB.
+
+**Wildcards:** When selected, wildcards can be used in the search terms.
+`?` matches any single character, and `*` matches any number of
+characters. Note that when this option is selected, partial matches are
+not returned: searching for `abc*` will match the string `abcd`, but
+searching for `abc` will not.
+
+**Wrap:** When selected, search results will return to the first hit
+after reaching the last hit.
+
+**Search footprint reference designators:** Selects whether the search
+should apply to footprint reference designators.
+
+**Search footprint values:** Selects whether the search should apply to
+footprint value fields.
+
+**Search other text items:** Selects whether the search should apply to
+other text items, including graphical text and footprint fields other
+than value and reference.
+
+**Search DRC markers:** Selects whether the search should apply to the
+violation descriptions of DRC markers shown on the board.
+
+**Search net names:** Selects whether the search should apply to the
+names of nets in the board.
+
+## Search panel
+
+The search panel is a docked panel that lists information about
+footprints, zones, nets, ratsnest lines (unrouted segments), and text
+from the PCB. Show or hide the search panel with **View** → **Panels** →
+**Search** or use the <span class="keycombo">Ctrl+G</span> shortcut.
+
+<figure>
+<img src="images/search_panel.png" style="width:80.0%"
+alt="Search panel, with a footprint selected" />
+</figure>
+
+You can optionally filter the list based on a search string. When no
+filter is used, all items in the design are listed in the corresponding
+tab. Items are filtered based on their properties:
+
+- Footprints are filtered by the contents of their fields. You can
+  select whether to search hidden fields by enabling the **Search Hidden
+  Fields** option in the ![config 16](images/icons/config_16.png) menu.
+  Footprints are also filtered by their metadata (library link,
+  description, and keywords) if **Search Metadata** is enabled in the
+  ![config 16](images/icons/config_16.png) menu.
+
+- Zones are filtered by the zone name.
+
+- Net and ratsnest items are filtered by the net name.
+
+- Text (text, textboxes, and dimensions) is filtered by the text
+  content.
+
+You can sort the filtered results in ascending or descending order of
+the value in a particular column by clicking on that column header.
+
+Filters support wildcards: `*` matches any characters, and `?` matches
+any single character. You can also use [regular
+expressions](http://docs.wxwidgets.org/3.2/overview_resyntax.html), such
+as `/footprint value/`.
+
+The displayed information depends on the item type:
+
+- All items list their name and/or value.
+
+- Physical items (footprints, zones, and text) additionally list their
+  layer and X/Y location.
+
+- Footprints additionally list their library link (library name and
+  footprint name) and description.
+
+- Text additionally lists the type of text object (text, textbox, or
+  dimension).
+
+- Net and ratsnest items additionally list their net name and net class.
+
+When you click an item in the search panel, the item is selected in the
+editing canvas. Depending on what is configured in the ![config
+16](images/icons/config_16.png) menu, the board editor will also pan
+and/or zoom to the selected item in the editing canvas. Double-clicking
+an item in the search panel opens its properties dialog (for net and
+ratsnest items, the [net classes dialog](#board-setup-net-classes) is
+opened instead).
+
+## 3D Viewer
+
+The 3D Viewer shows a 3-dimensional view of the board and the components
+on the board. You can view the board from different perspectives, show
+or hide different types of components, cross-probe from the PCB Editor
+to the 3D viewer, and generate raytraced renders of the board. Show the
+3D Viewer with **View** → **3D Viewer** or use the
+<span class="keycombo">Alt+3</span> shortcut.
+
+<figure>
+<img src="images/en/3d_viewer.png" alt="3D viewer" />
+</figure>
+
+<div class="note">
+
+The 3D model for a component will only appear if the 3D model file
+exists and has been [assigned to the
+footprint](#working-with-footprints).
+
+</div>
+
+<div class="note">
+
+Many footprints in KiCad’s standard library do not yet have model files
+created for them. However, these footprints may contain a path to a 3D
+model that does not yet exist, in anticipation of the 3D model being
+created in the future.
+
+</div>
+
+### Navigating the 3D view
+
+Dragging with the left mouse button will orbit the 3D view. By default
+this is the centroid of the board, but the pivot point can be reset to a
+new point on the board by moving the cursor over the desired point and
+pressing Space. Scrolling the mouse wheel will zoom the view in or out.
+Scrolling while holding Ctrl pans the view left and right, and scrolling
+while holding Shift pans up and down. Dragging with the middle mouse
+button also pans the view.
+
+Different sized 3D grids can be set using the **View** → **3D Grid**
+menu. Bounding boxes for each component can be enabled with
+**Preferences** → **Show Model Bounding Boxes**.
+
+When the PCB Editor and the 3D Viewer are both open, selecting a
+footprint in the PCB Editor will also highlight the component in the 3D
+Viewer. The highlight color is adjustable in **Preferences** →
+**Preferences…​** → **3D Viewer** → **Realtime Renderer** → **Selection
+Color**.
+
+### Appearance Manager
+
+The Appearance Manager is a panel at the right of the viewer which
+provides controls to manage the visibility, color, and opacity of
+different types of objects and board layers in the 3D view.
+
+Each layer or type of object in the list can be individually shown or
+hidden by clicking its corresponding visibility icon. PCB layers can
+have their colors customized; double-click on the color swatch next to
+the item type to edit the item’s color and opacity. To use the colors
+selected in the Board Setup dialog’s Physical Stackup editor, enable the
+**use board stackup colors** option. If you enable the **use PCB editor
+copper colors** option, copper layers in the 3D viewer will use the
+colors configured in the PCB editor canvas.
+
+You can save an appearance configuration as a preset, or load a
+configuration from a preset, using the **Preset** selector at the
+bottom. The <span class="keycombo">Ctrl+Tab</span> hotkey cycles through
+presets; press Tab repeatedly while holding Ctrl to cycle through
+multiple presets. Several built-in presets are available: "Follow PCB
+Editor" matches the visibility settings in the PCB editor, "Follow PCB
+Plot Settings" matches the visibility settings selected in the Plot
+dialog, and "legacy colors" matches the default 3D Viewer color settings
+from older versions of KiCad.
+
+Finally, you can save a viewport for later retrieval using the
+**Viewports** selector at the bottom. You can quickly cycle between
+saved viewports using <span class="keycombo">Shift+Tab</span>; pressing
+Tab repeatedly while holding Shift will cycle through multiple
+viewports.
+
+### Generating images with the 3D Viewer
+
+The current 3D view can be saved to an image with **File** → **Export
+Current View as PNG…​** or **Export Current View as JPG…​**, depending on
+the desired image format. The current view can also be copied to the
+clipboard using the ![copy icon](images/icons/copy_24.png) button, or
+**Edit** → **Copy 3D Image**.
+
+The 3D Viewer has a raytracing rendering mode which displays the board
+using a more physically accurate rendering model than the default
+rendering mode. Raytracing is slower than the default rendering mode,
+but it can be used when the most visually attractive results are
+desired. Raytracing mode is enabled with the ![raytracing
+icon](images/icons/render_mode_24.png) button, or with **Preferences** →
+**Raytracing**. The 3D grid and selection highlights are not shown in
+raytracing mode.
+
+Colors and other rendering options, for both raytraced and non-raytraced
+modes, can be adjusted in **Preferences** → **Preferences…​** → **3D
+Viewer**.
+
+### 3D viewer controls
+
+Many viewing options are controlled with the top toolbar.
+
+|                                                              |                                        |
+|--------------------------------------------------------------|----------------------------------------|
+| ![import3d 24](images/icons/import3d_24.png)                 | Reload the 3D model                    |
+| ![copy 24](images/icons/copy_24.png)                         | Copy 3D image to clipboard             |
+| ![ray tracing 24](images/icons/ray_tracing_24.png)           | Render current view using raytracing   |
+| ![refresh 24](images/icons/refresh_24.png)                   | Redraw                                 |
+| ![zoom in 24](images/icons/zoom_in_24.png)                   | Zoom in                                |
+| ![zoom out 24](images/icons/zoom_out_24.png)                 | Zoom out                               |
+| ![zoom fit in page 24](images/icons/zoom_fit_in_page_24.png) | Fit drawing in display area            |
+| ![rotate cw x 24](images/icons/rotate_cw_x_24.png)           | Rotate X clockwise                     |
+| ![rotate ccw x 24](images/icons/rotate_ccw_x_24.png)         | Rotate X counterclockwise              |
+| ![rotate cw y 24](images/icons/rotate_cw_y_24.png)           | Rotate Y clockwise                     |
+| ![rotate ccw y 24](images/icons/rotate_ccw_y_24.png)         | Rotate Y counterclockwise              |
+| ![rotate cw z 24](images/icons/rotate_cw_z_24.png)           | Rotate Z clockwise                     |
+| ![rotate ccw z 24](images/icons/rotate_ccw_z_24.png)         | Rotate Z counterclockwise              |
+| ![flip board 24](images/icons/flip_board_24.png)             | Flip board view                        |
+| ![left 24](images/icons/left_24.png)                         | Pan board left                         |
+| ![right 24](images/icons/right_24.png)                       | Pan board right                        |
+| ![up 24](images/icons/up_24.png)                             | Pan board up                           |
+| ![down 24](images/icons/down_24.png)                         | Pan board down                         |
+| ![ortho](images/icons/ortho.png)                             | Enable/disable orthographic projection |
+| ![layers manager 24](images/icons/layers_manager_24.png)     | Show/hide the Appearance Manager       |
+
+## Net inspector
+
+The Net Inspector is a docked panel that allows you to view statistics
+about all the nets in a board. It also lets you add, remove, and rename
+nets. To open the inspector, click the ![list nets
+24](images/icons/list_nets_24.png) icon at the top of the Nets section
+of the Appearance panel, or select **View** → **Panels** → **Net
+Inspector**.
+
+<figure>
+<img src="images/net_inspector.png" style="width:70.0%"
+alt="net inspector" />
+</figure>
+
+Double-clicking a net in the list will [highlight](#net-highlighting)
+that net on the board. You can also highlight a net by right clicking it
+and selecting **Highlight Selected Net**. If multiple nets are selected,
+this lets you highlight all of them at once. You can remove the net
+highlighting by right clicking the net’s row in the Net Inspector and
+selecting **Clear Net Highlighting**, in addition to the usual ways of
+[removing net highlighting](#net-highlighting).
+
+Clicking a column title allows you to sort the list of nets by that
+column. The Filter box lets you limit the listed nets to those that
+match the filter string. By default, the filter matches against both net
+names and net class names, but you can filter by just one or the other
+by selecting or deselecting **Filter by Net Name** or **Filter by
+Netclass** under the ![options generic 16
+16](images/icons/options_generic_16_16.png) menu.
+
+By default, nets with no connections and nets with no pads are not
+shown. You can choose to show them by selecting **Show Unconnected
+Nets** and **Show Zero Pad Nets** under the ![options generic 16
+16](images/icons/options_generic_16_16.png) menu.
+
+The Net Inspector shows the following statistics for each net:
+
+- **Pad Count** is the number of pads with that net, counting both
+  surface mount and through hole pads.
+
+- **Via Count** is the number of vias with that net.
+
+- **Via Length** is the sum total length of all vias with that net. The
+  full height of each via is always counted, even if the connections to
+  the via are such that the full via height is not electrically used. In
+  other words, Via Length is equal to Via Count multiplied by the
+  stackup height of the board.
+
+- **Track Length** is the total length of all track segments in a net,
+  not accounting for topology. For example, in a branching net structure
+  all branches are included in the total length. The track length is
+  also reported per copper layer.
+
+- **Die Length** is the total of all Pad to Die Length values set for
+  pads on the net.
+
+Each column can be shown or hidden in the ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Show / Hide Columns**
+menu. You can save the Net Inspector statistics to a CSV file by
+clicking ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Save Net Inspector
+Report**. The generated report includes all nets and columns, even if
+they are currently filtered or hidden in the Net Inspector.
+
+### Grouping nets
+
+You can group nets in the Net Inspector to organize them and view them
+more easily. Each group displays the total statistics for all its
+members, as if the group were a single net. For example, if you have a
+signal with a series resistor breaking the signal into two nets, you
+could create a group that contains both of these nets. This would allow
+you to analyze the total length of both nets, rather than each
+individually.
+
+You can group nets by their net class by clicking ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Group by netclass**.
+Alternatively, you can create custom groups based on net name patterns.
+To create a new custom group, click ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Add Custom Group**. Any
+nets that contain the specified pattern in their name will be shown as
+part of the group and not shown outside of the group. For example, the
+pattern `CAN` matches the nets `CAN_RX` and `CAN_TX`. Patterns are not
+case sensitive.
+
+The pattern can also use regular expressions to match nets if the
+pattern is surrounded in slashes. For example, the pattern `/^AN/`
+matches nets `AN0`, `AN1`, etc., but not `CAN`.
+
+To remove a group and release its members back into the full list of
+nets, click ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Remove Selected Custom
+Group**. This action is also available in the right click menu. To
+remove all groups at once, click ![options generic 16
+16](images/icons/options_generic_16_16.png) → **Remove All Custom
+Groups**.
+
+### Editing nets
+
+The Net Inspector allows you to create new nets in the board and remove
+or rename existing nets. To create a new net, right click in the Net
+Inspector and select **Add Net**, then provide a name for the new net.
+To delete a net, right click it in the list of nets and choose **Delete
+Selected Net**. If multiple nets are selected, they will all be deleted.
+To rename a net, right click it and choose **Rename Selected Net**, then
+provide a new name.
+
+<div class="note">
+
+Nets are usually not edited in the board. Instead, it is recommended to
+define nets in the schematic. Nets are typically managed in the board by
+creating or modifying a schematic and then using the [Update PCB From
+Schematic](#forward-annotation) tool to update the nets in the board
+based on the schematic design. The Net Inspector can be used to manage
+nets in alternate workflows that do not use a schematic.
+
+</div>
+
+<div class="note">
+
+Nets that are modified in the Board Editor will not effect the schematic
+until the [schematic is updated from the PCB](#back-annotation) through
+the back-annotation process.
+
+</div>
+
+### Differences between Net Inspector and Length Tuner
+
+The Net Inspector may report different net lengths than the [length
+tuner](#length-tuning), because the two tools have different purposes
+and calculate track/net lengths differently. In short, the Net Inspector
+sums up the total length of each track segment and via on a net, while
+the length tuner calculates the effective electrical length of a path
+between two points on a net. The specific differences are as follows:
+
+- The Net Inspector reports track length as a simple sum of the length
+  of each track segment on a net. The length tuner calculates an
+  effective electrical length of a net, which includes optimizing paths
+  through pads to calculate the shortest possible path.
+
+- If a routed net has a branching topology, the Net Inspector total
+  includes the length of each branch in the total. The length tuner
+  calculates a point-to-point length; if there are any branches, the
+  length tuner will stop at the closest branch and report the length up
+  to the branch.
+
+- The Net Inspector always includes the effective via height in its via
+  length and total length calculations. If a via connects to tracks on
+  both the top and bottom layers, the full via height is included in the
+  length calculation. Otherwise, only the stackup height between the
+  connected layers is included. The length tuner calculates effective
+  via height in the same way as the Net Inspector, but via height is
+  only included in the length calculation when the **use stackup
+  height** setting is enabled [board constraint
+  settings](#board-setup-constraints). If the setting is disabled, the
+  length tuner will not include vias in its calculations at all.

@@ -1,0 +1,503 @@
+# Actions reference
+
+Below is a list of every available **action** in the PCB Editor: a
+command that can be assigned to a hotkey.
+
+## PCB Editor
+
+The actions below are available in the PCB Editor. Hotkeys can be
+assigned to any of these actions in the **Hotkeys** section of the
+preferences.
+
+| Action                                            | Default Hotkey                             | Description                                                                                                                    |
+|---------------------------------------------------|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| Align to Bottom                                   |                                            | Aligns selected items to the bottom edge of the item under the cursor                                                          |
+| Align to Horizontal Center                        |                                            | Aligns selected items to the horizontal center of the item under the cursor                                                    |
+| Align to Vertical Center                          |                                            | Aligns selected items to the vertical center of the item under the cursor                                                      |
+| Align to Left                                     |                                            | Aligns selected items to the left edge of the item under the cursor                                                            |
+| Align to Right                                    |                                            | Aligns selected items to the right edge of the item under the cursor                                                           |
+| Align to Top                                      |                                            | Aligns selected items to the top edge of the item under the cursor                                                             |
+| Distribute Horizontally by Centers                |                                            | Distributes selected items between the left-most item and the right-most itemso that the item centers are equally distributed  |
+| Distribute Horizontally with Even Gaps            |                                            | Distributes selected items between the left-most item and the right-most item so that the gaps between items are equal         |
+| Distribute Vertically by Centers                  |                                            | Distributes selected items between the top-most item and the bottom-most item so that the item centers are equally distributed |
+| Distribute Vertically with Even Gaps              |                                            | Distributes selected items between the top-most item and the bottom-most item so that the gaps between items are equal         |
+| Create Array…                                     | <span class="keycombo">Ctrl+T</span>       |                                                                                                                                |
+| Place Off-Board Footprints                        |                                            | Performs automatic placement of components outside board area                                                                  |
+| Place Selected Footprints                         |                                            | Performs automatic placement of selected components                                                                            |
+| Flip Board View                                   |                                            | View board from the opposite side                                                                                              |
+| Sketch Graphic Items                              |                                            | Show graphic items in outline mode                                                                                             |
+| Decrease Layer Opacity                            | {                                          | Make the current layer more transparent                                                                                        |
+| Increase Layer Opacity                            | }                                          | Make the current layer less transparent                                                                                        |
+| Switch to Copper (B.Cu) Layer                     | PgDn                                       |                                                                                                                                |
+| Switch to Inner Layer 1                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 10                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 11                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 12                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 13                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 14                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 15                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 16                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 17                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 18                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 19                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 2                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 20                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 21                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 22                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 23                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 24                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 25                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 26                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 27                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 28                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 29                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 3                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 30                          |                                            |                                                                                                                                |
+| Switch to Inner Layer 4                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 5                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 6                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 7                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 8                           |                                            |                                                                                                                                |
+| Switch to Inner Layer 9                           |                                            |                                                                                                                                |
+| Switch to Next Layer                              | \+                                         |                                                                                                                                |
+| Cycle Layer Pair Presets                          | <span class="keycombo">Shift+V</span>      | Cycle between preset layer pairs                                                                                               |
+| Switch to Previous Layer                          | \-                                         |                                                                                                                                |
+| Toggle Layer                                      | V                                          | Switch between layers in active layer pair                                                                                     |
+| Switch to Component (F.Cu) layer                  | PgUp                                       |                                                                                                                                |
+| Local Ratsnest                                    |                                            | Toggle ratsnest display of selected item(s)                                                                                    |
+| Net Color Mode (3-state)                          |                                            | Cycle between using net and netclass colors for all nets, just ratsnests, and none                                             |
+| Sketch Pads                                       |                                            | Show pads in outline mode                                                                                                      |
+| Curved Ratsnest Lines                             |                                            | Show ratsnest with curved lines                                                                                                |
+| Ratsnest Mode (3-state)                           |                                            | Cycle between showing ratsnests for all layers, just visible layers, and none                                                  |
+| Repair Board                                      |                                            | Run various diagnostics and attempt to repair board                                                                            |
+| Appearance                                        |                                            | Show/hide the appearance manager                                                                                               |
+| Net Inspector                                     |                                            | Show/hide the net inspector                                                                                                    |
+| Show Pad Numbers                                  |                                            |                                                                                                                                |
+| Scripting Console                                 |                                            | Show the Python scripting console                                                                                              |
+| Show Ratsnest                                     |                                            | Show lines/arcs representing missing connections on the board                                                                  |
+| Sketch Text Items                                 |                                            | Show footprint texts in line mode                                                                                              |
+| Sketch Tracks                                     | K                                          | Show tracks in outline mode                                                                                                    |
+| Sketch Vias                                       |                                            | Show vias in outline mode                                                                                                      |
+| Draw Zone Outlines                                |                                            | Show only zone boundaries                                                                                                      |
+| Draw Zone Fills                                   |                                            | Show filled areas of zones                                                                                                     |
+| Toggle Zone Display                               |                                            | Cycle between showing zone fills and just their outlines                                                                       |
+| Create Arc from Selection                         |                                            | Creates an arc from the selected line segment                                                                                  |
+| Create Rule Area from Selection…​                  |                                            | Creates a rule area from the selection                                                                                         |
+| Create Lines from Selection…​                      |                                            | Creates graphic lines from the selection                                                                                       |
+| Create Polygon from Selection…​                    |                                            | Creates a graphic polygon from the selection                                                                                   |
+| Create Tracks from Selection                      |                                            | Creates tracks from the selected graphic lines                                                                                 |
+| Create Zone from Selection…​                       |                                            | Creates a copper zone from the selection                                                                                       |
+| Create Outsets from Selection                     |                                            | Create outset lines from the selected item                                                                                     |
+| Design Rules Checker                              |                                            | Show the design rules checker window                                                                                           |
+| Open in Footprint Editor                          | <span class="keycombo">Ctrl+E</span>       |                                                                                                                                |
+| Edit Library Footprint…                           | <span class="keycombo">Ctrl+Shift+E</span> |                                                                                                                                |
+| Append Board…​                                     |                                            | Open another board and append its contents to this board                                                                       |
+| Assign Netclass…​                                  |                                            | Assign a netclass to nets matching a pattern                                                                                   |
+| Board Setup…​                                      |                                            | Edit board setup including layers, design rules and various defaults                                                           |
+| Clear Net Highlighting                            | ~                                          |                                                                                                                                |
+| Drill/Place File Origin                           |                                            | Place origin point for drill files and component placement files                                                               |
+| Reset Drill Origin                                |                                            |                                                                                                                                |
+| Export Specctra DSN…​                              |                                            | Export Specctra DSN routing info                                                                                               |
+| Bill of Materials…​                                |                                            | Create bill of materials from board                                                                                            |
+| IPC-D-356 Netlist File…                           |                                            | Generate IPC-D-356 netlist file                                                                                                |
+| Drill Files (.drl)…​                               |                                            | Generate Excellon drill file(s)                                                                                                |
+| Gerbers (.gbr)…​                                   |                                            | Generate Gerbers for fabrication                                                                                               |
+| IPC-2581 File (.xml)…​                             |                                            | Generate an IPC-2581 file                                                                                                      |
+| ODB++ Output File…​                                |                                            | Generate ODB++ output files                                                                                                    |
+| Component Placement (.pos, .gbr)…​                 |                                            | Generate component placement file(s) for pick and place                                                                        |
+| Footprint Report (.rpt)…​                          |                                            | Create report of all footprints from current board                                                                             |
+| Group Items                                       |                                            | Group the selected items so that they are treated as a single item                                                             |
+| Enter Group                                       |                                            | Enter the group to edit items                                                                                                  |
+| Leave Group                                       |                                            | Leave the current group                                                                                                        |
+| Hide Net in Ratsnest                              |                                            | Hide the selected net in the ratsnest of unconnected net lines/arcs                                                            |
+| Highlight Net                                     | \`                                         | Highlight net under cursor                                                                                                     |
+| Highlight Net                                     |                                            | Highlight all copper items on the selected net(s)                                                                              |
+| Import Netlist…​                                   |                                            | Read netlist and update board connectivity                                                                                     |
+| Import Specctra Session…​                          |                                            | Import routed Specctra session (\*.ses) file                                                                                   |
+| Lock                                              |                                            | Prevent items from being moved and/or resized on the canvas                                                                    |
+| Place Footprints                                  | A                                          |                                                                                                                                |
+| Remove Items                                      |                                            | Remove items from group                                                                                                        |
+| Switch to Schematic Editor                        |                                            | Open schematic in schematic editor                                                                                             |
+| Show Net in Ratsnest                              |                                            | Show the selected net in the ratsnest of unconnected net lines/arcs                                                            |
+| Constrain to H, V, 45                             | <span class="keycombo">Shift+Space</span>  | Limit actions to horizontal, vertical, or 45 degrees from the starting point                                                   |
+| Toggle Last Net Highlight                         |                                            | Toggle between last two highlighted nets                                                                                       |
+| Toggle Lock                                       | L                                          | Lock or unlock selected items                                                                                                  |
+| Toggle Net Highlight                              | <span class="keycombo">Alt+\`</span>       |                                                                                                                                |
+| Switch Track Width to Previous                    | <span class="keycombo">Shift+W</span>      | Change track width to previous pre-defined size                                                                                |
+| Switch Track Width to Next                        | W                                          | Change track width to next pre-defined size                                                                                    |
+| Ungroup Items                                     |                                            | Ungroup any selected groups                                                                                                    |
+| Unlock                                            |                                            | Allow items to be moved and/or resized on the canvas                                                                           |
+| Decrease Via Size                                 | kbd:\[\\                                   | Change via size to previous pre-defined size                                                                                   |
+| Increase Via Size                                 | '                                          | Change via size to next pre-defined size                                                                                       |
+| Duplicate Zone onto Layer…                        |                                            |                                                                                                                                |
+| Merge Zones                                       |                                            |                                                                                                                                |
+| Rebuild All Generators                            |                                            | Rebuilds geometry of all generators                                                                                            |
+| Update All Tuning Patterns                        |                                            | Attempt to re-tune existing tuning patterns within their bounds                                                                |
+| Rebuild Selected Generators                       |                                            | Rebuilds geometry of selected generator(s)                                                                                     |
+| Generators Manager                                |                                            | Show a manager dialog for Generator objects                                                                                    |
+| Change Footprint…                                 |                                            | Assign a different footprint from the library                                                                                  |
+| Change Footprints…​                                |                                            | Assign different footprints from the library                                                                                   |
+| Cleanup Graphics…​                                 |                                            | Cleanup redundant items, etc.                                                                                                  |
+| Cleanup Tracks & Vias…​                            |                                            | Cleanup redundant items, shorting items, etc.                                                                                  |
+| Edit Teardrops…​                                   |                                            | Add, remove or edit teardrops globally across board                                                                            |
+| Edit Text & Graphics Properties…​                  |                                            | Edit Text and graphics properties globally across board                                                                        |
+| Edit Track & Via Properties…​                      |                                            | Edit track and via properties globally across board                                                                            |
+| Global Deletions…​                                 |                                            | Delete tracks, footprints and graphic items from board                                                                         |
+| Remove Unused Pads…​                               |                                            | Remove or restore the unconnected inner layers on through hole pads and vias                                                   |
+| Swap Layers…​                                      |                                            | Move tracks or drawings from one layer to another                                                                              |
+| Update Footprint…                                 |                                            | Update footprint to include any changes from the library                                                                       |
+| Update Footprints from Library…​                   |                                            | Update footprints to include any changes from the library                                                                      |
+| Compare Footprint with Library                    |                                            | Show differences between board footprint and its library equivalent                                                            |
+| Clearance Resolution                              |                                            | Show clearance resolution for the active layer between two selected objects                                                    |
+| Constraints Resolution                            |                                            | Show constraints resolution for the selected object                                                                            |
+| Show Board Statistics                             |                                            | Shows board statistics                                                                                                         |
+| Show Footprint Associations                       |                                            | Show footprint library and schematic symbol associations                                                                       |
+| Draw Aligned Dimensions                           |                                            |                                                                                                                                |
+| Draw Arcs                                         | <span class="keycombo">Ctrl+Shift+A</span> |                                                                                                                                |
+| Switch Arc Posture                                | /                                          |                                                                                                                                |
+| Draw Bezier Curve                                 | <span class="keycombo">Ctrl+Shift+B</span> |                                                                                                                                |
+| Draw Center Dimensions                            |                                            |                                                                                                                                |
+| Switch Dimension Arrows                           |                                            | Switch between inward and outward dimension arrows                                                                             |
+| Draw Circles                                      | <span class="keycombo">Ctrl+Shift+C</span> |                                                                                                                                |
+| Close Outline                                     |                                            | Close the in progress outline                                                                                                  |
+| Decrease Line Width                               | <span class="keycombo">Ctrl+-</span>       |                                                                                                                                |
+| Delete Last Point                                 | Back                                       | Delete the last point added to the current item                                                                                |
+| Draw Tables                                       |                                            |                                                                                                                                |
+| Draw Polygons                                     | <span class="keycombo">Ctrl+Shift+P</span> |                                                                                                                                |
+| Increase Line Width                               | <span class="keycombo">Ctrl++</span>       |                                                                                                                                |
+| Draw Leaders                                      |                                            |                                                                                                                                |
+| Draw Lines                                        | <span class="keycombo">Ctrl+Shift+L</span> |                                                                                                                                |
+| Draw Orthogonal Dimensions                        | <span class="keycombo">Ctrl+Shift+H</span> |                                                                                                                                |
+| Add Board Characteristics                         |                                            | Add a board characteristics table on a graphic layer                                                                           |
+| Import Graphics…​                                  | <span class="keycombo">Ctrl+Shift+F</span> | Import 2D drawing file                                                                                                         |
+| Place Reference Images                            |                                            | Add bitmap images to be used as reference (images will not be included in any output)                                          |
+| Add Stackup Table                                 |                                            | Add a board stackup table on a graphic layer                                                                                   |
+| Draw Radial Dimensions                            |                                            |                                                                                                                                |
+| Draw Rectangles                                   |                                            |                                                                                                                                |
+| Draw Rule Areas                                   | <span class="keycombo">Ctrl+Shift+K</span> |                                                                                                                                |
+| Place the Footprint Anchor                        | <span class="keycombo">Ctrl+Shift+N</span> | Set the anchor point of the footprint                                                                                          |
+| Add a Similar Zone                                | <span class="keycombo">Ctrl+Shift+.</span> | Add a zone with the same settings as an existing zone                                                                          |
+| Draw Text                                         | <span class="keycombo">Ctrl+Shift+T</span> |                                                                                                                                |
+| Draw Text Boxes                                   |                                            |                                                                                                                                |
+| Place Vias                                        | <span class="keycombo">Ctrl+Shift+V</span> | Place free-standing vias                                                                                                       |
+| Draw Filled Zones                                 | <span class="keycombo">Ctrl+Shift+Z</span> |                                                                                                                                |
+| Add a Zone Cutout                                 | <span class="keycombo">Shift+C</span>      | Add a cutout to an existing zone or rule area                                                                                  |
+| Get and Move Footprint                            | T                                          | Selects a footprint by reference designator and places it under the cursor for moving                                          |
+| Chamfer Lines…​                                    |                                            | Cut away corners between selected lines                                                                                        |
+| Change Track Width                                |                                            | Updates selected track & via sizes                                                                                             |
+| Delete Full Track                                 | <span class="keycombo">Shift+Del</span>    | Deletes selected item(s) and copper connections                                                                                |
+| Dogbone Corners…​                                  |                                            | Add dogbone corners to selected lines                                                                                          |
+| Duplicate and Increment                           | <span class="keycombo">Ctrl+Shift+D</span> | Duplicates the selected item(s), incrementing pad numbers                                                                      |
+| Extend Lines to Meet                              |                                            | Extend lines to meet each other                                                                                                |
+| Fillet Lines…​                                     |                                            | Adds arcs tangent to the selected lines                                                                                        |
+| Fillet Tracks                                     |                                            | Adds arcs tangent to the selected straight track segments                                                                      |
+| Change Side / Flip                                | F                                          | Flips selected item(s) to opposite side of board                                                                               |
+| Heal Shapes                                       |                                            | Connect shapes, possibly extending or cutting them, or adding extra geometry                                                   |
+| Intersect Polygons                                |                                            | Create the intersection of the selected polygons                                                                               |
+| Merge Polygons                                    |                                            | Merge selected polygons into a single polygon                                                                                  |
+| Mirror Horizontally                               |                                            | Mirrors selected item(s) across the Y axis                                                                                     |
+| Mirror Vertically                                 |                                            | Mirrors selected item(s) across the X axis                                                                                     |
+| Move Corner To…​                                   |                                            | Move the active corner to an exact location                                                                                    |
+| Move Exactly…                                     | <span class="keycombo">Shift+M</span>      | Moves the selected item(s) by an exact amount                                                                                  |
+| Move Midpoint To…​                                 |                                            | Move the active midpoint to an exact location                                                                                  |
+| Pack and Move Footprints                          | P                                          | Sorts selected footprints by reference, packs based on size and initiates movement                                             |
+| Properties…                                       | E                                          |                                                                                                                                |
+| Rotate Counterclockwise                           | R                                          |                                                                                                                                |
+| Rotate Clockwise                                  | <span class="keycombo">Shift+R</span>      |                                                                                                                                |
+| Simplify Polygons                                 |                                            | Simplify polygon outlines, removing superfluous points                                                                         |
+| Skip                                              | Tab                                        | Skip to next item                                                                                                              |
+| Subtract Polygons                                 |                                            | Subtract selected polygons from the last one selected                                                                          |
+| Swap                                              | <span class="keycombo">Alt+S</span>        | Swap positions of selected items                                                                                               |
+| Copy with Reference                               |                                            | Copy selected item(s) to clipboard with a specified starting point                                                             |
+| Move                                              | M                                          |                                                                                                                                |
+| Move Individually                                 | <span class="keycombo">Ctrl+M</span>       | Moves the selected items one-by-one                                                                                            |
+| Move with Reference                               |                                            | Moves the selected item(s) with a specified starting point                                                                     |
+| Attempt Finish                                    | F                                          | Attempts to complete current route to nearest ratsnest end.                                                                    |
+| Attempt Finish Selected (Autoroute)               | <span class="keycombo">Shift+F</span>      | Sequentially attempt to automatically route all selected pads.                                                                 |
+| Break Track                                       |                                            | Splits the track segment into two segments connected at the cursor position.                                                   |
+| Route From Other End                              | <span class="keycombo">Ctrl+E</span>       | Commits current segments and starts next segment from nearest ratsnest end.                                                    |
+| Custom Track/Via Size…                            | Q                                          | Shows a dialog for changing the track width and via size.                                                                      |
+| Cycle Router Mode                                 |                                            | Cycle router to the next mode                                                                                                  |
+| Route Differential Pair                           | 6                                          | Route differential pairs                                                                                                       |
+| Differential Pair Dimensions…​                     |                                            | Open Differential Pair Dimension settings                                                                                      |
+| Drag 45 Degree Mode                               | D                                          | Drags the track segment while keeping connected tracks at 45 degrees.                                                          |
+| Drag Free Angle                                   | G                                          | Drags the nearest joint in the track without restricting the track angle.                                                      |
+| Router Highlight Mode                             |                                            | Switch router to highlight mode                                                                                                |
+| Place Blind/Buried Via                            | <span class="keycombo">Alt+Shift+V</span>  | Adds a blind or buried via at the end of currently routed track.                                                               |
+| Place Microvia                                    | <span class="keycombo">Ctrl+V</span>       | Adds a microvia at the end of currently routed track.                                                                          |
+| Place Through Via                                 | V                                          | Adds a through-hole via at the end of currently routed track.                                                                  |
+| Route Selected                                    | <span class="keycombo">Shift+X</span>      | Sequentially route selected items from ratsnest anchor.                                                                        |
+| Route Selected From Other End                     | <span class="keycombo">Shift+E</span>      | Sequentially route selected items from other end of ratsnest anchor.                                                           |
+| Select Layer and Place Blind/Buried Via…          | <span class="keycombo">Alt+\<</span>       | Select a layer, then add a blind or buried via at the end of currently routed track.                                           |
+| Select Layer and Place Micro Via…​                 |                                            | Select a layer, then add a micro via at the end of currently routed track.                                                     |
+| Select Layer and Place Through Via…               | \<                                         | Select a layer, then add a through-hole via at the end of currently routed track.                                              |
+| Set Layer Pair…​                                   |                                            | Change active layer pair for routing                                                                                           |
+| Interactive Router Settings…                      | <span class="keycombo">Ctrl+\<</span>      | Open Interactive Router settings                                                                                               |
+| Router Shove Mode                                 |                                            | Switch router to shove mode                                                                                                    |
+| Route Single Track                                | X                                          | Route tracks                                                                                                                   |
+| Switch Track Posture                              | /                                          | Switches posture of the currently routed track.                                                                                |
+| Track Corner Mode                                 | <span class="keycombo">Ctrl+/</span>       | Switches between sharp/rounded and 45°/90° corners when routing tracks.                                                        |
+| Undo Last Segment                                 | Back                                       | Walks the current track back one segment.                                                                                      |
+| Router Walkaround Mode                            |                                            | Switch router to walkaround mode                                                                                               |
+| Deselect All Tracks in Net                        |                                            | Deselects all tracks & vias belonging to the same net.                                                                         |
+| Filter Selected Items…​                            |                                            | Remove items from the selection by type                                                                                        |
+| Grab Nearest Unconnected Footprints               | <span class="keycombo">Shift+O</span>      | Selects and initiates moving the nearest unconnected footprint on each selected net.                                           |
+| Select/Expand Connection                          | U                                          | Selects a connection or expands an existing selection to junctions, pads, or entire connections                                |
+| Select All Tracks in Net                          |                                            | Selects all tracks & vias belonging to the same net.                                                                           |
+| Select on Schematic                               |                                            | Selects corresponding items in Schematic editor                                                                                |
+| Sheet                                             |                                            | Selects all footprints and tracks in the schematic sheet                                                                       |
+| Items in Same Hierarchical Sheet                  |                                            | Selects all footprints and tracks in the same schematic sheet                                                                  |
+| Select All Unconnected Footprints                 | O                                          | Selects all unconnected footprints belonging to each selected net.                                                             |
+| Unroute Selected                                  |                                            | Unroutes selected items to the nearest pad.                                                                                    |
+| Tune Length of a Differential Pair                | 8                                          |                                                                                                                                |
+| Tune Skew of a Differential Pair                  | 9                                          |                                                                                                                                |
+| Tune Length of a Single Track                     | 7                                          |                                                                                                                                |
+| Draw Microwave Polygonal Shapes                   |                                            | Create a microwave polygonal shape from a list of vertices                                                                     |
+| Draw Microwave Gaps                               |                                            | Create gap of specified length for microwave applications                                                                      |
+| Draw Microwave Lines                              |                                            | Create line of specified length for microwave applications                                                                     |
+| Draw Microwave Stubs                              |                                            | Create stub of specified length for microwave applications                                                                     |
+| Draw Microwave Arc Stubs                          |                                            | Create stub (arc) of specified size for microwave applications                                                                 |
+| Footprint Checker                                 |                                            | Show the footprint checker window                                                                                              |
+| Copy Footprint                                    |                                            |                                                                                                                                |
+| Create Footprint…​                                 |                                            | Create a new footprint using the Footprint Wizard                                                                              |
+| Cut Footprint                                     |                                            |                                                                                                                                |
+| Delete Footprint from Library                     |                                            |                                                                                                                                |
+| Duplicate Footprint                               |                                            |                                                                                                                                |
+| Edit Footprint                                    |                                            | Show selected footprint on editor canvas                                                                                       |
+| Export Current Footprint…​                         |                                            | Export edited footprint to file                                                                                                |
+| Footprint Properties…​                             |                                            |                                                                                                                                |
+| Import Footprint…​                                 |                                            | Import footprint from file                                                                                                     |
+| New Footprint                                     | <span class="keycombo">Ctrl+N</span>       | Create a new, empty footprint                                                                                                  |
+| Paste Footprint                                   |                                            |                                                                                                                                |
+| Rename Footprint…​                                 |                                            |                                                                                                                                |
+| Repair Footprint                                  |                                            | Run various diagnostics and attempt to repair footprint                                                                        |
+| Generate Placement Rule Areas…​                    |                                            | Creates best-fit placement rule areas                                                                                          |
+| Repeat Layout…​                                    |                                            | Clones placement & routing across multiple identical channels                                                                  |
+| Paste Default Pad Properties to Selected          |                                            | Replace the current pad’s properties with those copied earlier                                                                 |
+| Copy Pad Properties to Default                    |                                            | Copy current pad’s properties                                                                                                  |
+| Push Pad Properties to Other Pads…​                |                                            | Copy the current pad’s properties to other pads                                                                                |
+| Default Pad Properties…                           |                                            | Edit the pad properties used when creating new pads                                                                            |
+| Renumber Pads…                                    |                                            | Renumber pads by clicking on them in the desired order                                                                         |
+| Edit Pad as Graphic Shapes                        | <span class="keycombo">Ctrl+E</span>       | Ungroups a custom-shaped pad for editing as individual graphic shapes                                                          |
+| Add Pad                                           |                                            | Add a pad                                                                                                                      |
+| Finish Pad Edit                                   | <span class="keycombo">Ctrl+E</span>       | Regroups all touching graphic shapes into the edited pad                                                                       |
+| Create Corner                                     | Ins                                        | Create a corner                                                                                                                |
+| Keep Arc Center, Adjust Radius                    |                                            | Switch arc editing mode to keep center, adjust radius and endpoints                                                            |
+| Keep Arc Endpoints or Direction of Starting Point |                                            | Switch arc editing mode to keep endpoints, or to keep direction of the other point                                             |
+| Chamfer Corner                                    |                                            | Chamfer corner                                                                                                                 |
+| Remove Corner                                     |                                            | Remove corner                                                                                                                  |
+| Position Relative To…                             | <span class="keycombo">Shift+P</span>      | Positions the selected item(s) by an exact amount relative to another                                                          |
+| Position Interactively…​                           |                                            | Positions the selected item(s) by an exact amount relative to another, interactively                                           |
+| Geographical Reannotate…​                          |                                            | Reannotate PCB in geographical order                                                                                           |
+| Open Plugin Directory                             |                                            | Opens the directory in the default system file manager                                                                         |
+| Edit Table…​                                       | <span class="keycombo">Ctrl+E</span>       |                                                                                                                                |
+| Draft Fill Selected Zone(s)                       |                                            | Update copper fill of selected zone(s) without regard to other interacting zones                                               |
+| Fill All Zones                                    | B                                          | Update copper fill of all zones                                                                                                |
+| Unfill Selected Zone(s)                           |                                            | Remove copper fill from selected zone(s)                                                                                       |
+| Unfill All Zones                                  | <span class="keycombo">Ctrl+B</span>       | Remove copper fill from all zones                                                                                              |
+| Decrease Amplitude                                | 4                                          | Decrease tuning pattern amplitude by one step.                                                                                 |
+| Increase Amplitude                                | 3                                          | Increase tuning pattern amplitude by one step.                                                                                 |
+| Decrease Spacing                                  | 2                                          | Decrease tuning pattern spacing by one step.                                                                                   |
+| Increase Spacing                                  | 1                                          | Increase tuning pattern spacing by one step.                                                                                   |
+
+## 3D Viewer
+
+The actions below are available in the 3D Viewer. Hotkeys can be
+assigned to any of these actions in the **Hotkeys** section of the
+preferences.
+
+| Action                         | Default Hotkey                        | Description                                                             |
+|--------------------------------|---------------------------------------|-------------------------------------------------------------------------|
+| Show 3D Models marked DNP      | D                                     | Show 3D models even if marked 'Do Not Place'                            |
+| Show 3D Models not in POS File | P                                     | Show 3D models even if not found in .pos file                           |
+| Show Unspecified 3D Models     | V                                     | Show 3D models for 'unspecified' type footprints                        |
+| Show SMD 3D Models             | S                                     | Show 3D models for 'Surface mount' type footprints                      |
+| Show Through Hole 3D Models    | T                                     | Show 3D models for 'Through hole' type footprints                       |
+| Flip Board                     | F                                     | Flip the board view                                                     |
+| Home View                      | Home                                  | Redraw at the home position and zoom                                    |
+| Render CAD Colors              |                                       | Use a CAD color style based on the diffuse color of the material        |
+| Render Solid Colors            |                                       | Use only the diffuse color property from 3D model file                  |
+| Render Realistic Materials     |                                       | Use all material properties from each 3D model file                     |
+| Move Board Down                | Down                                  |                                                                         |
+| Move Board Left                | Left                                  |                                                                         |
+| Move Board Right               | Right                                 |                                                                         |
+| Move Board Up                  | Up                                    |                                                                         |
+| No 3D Grid                     |                                       |                                                                         |
+| Set Pivot                      | Space                                 | Place point around which the board will be rotated (middle mouse click) |
+| Rotate X Clockwise             |                                       |                                                                         |
+| Rotate X Counterclockwise      |                                       |                                                                         |
+| Rotate Y Clockwise             |                                       |                                                                         |
+| Rotate Y Counterclockwise      |                                       |                                                                         |
+| Rotate Z Clockwise             |                                       |                                                                         |
+| Rotate Z Counterclockwise      |                                       |                                                                         |
+| 3D Grid 10mm                   |                                       |                                                                         |
+| 3D Grid 1mm                    |                                       |                                                                         |
+| 3D Grid 2.5mm                  |                                       |                                                                         |
+| 3D Grid 5mm                    |                                       |                                                                         |
+| Show 3D Axis                   |                                       |                                                                         |
+| Show Model Bounding Boxes      |                                       | Show 3D model bounding boxes in realtime renderer                       |
+| Show Appearance Manager        |                                       | Show/hide the appearance manager                                        |
+| Toggle Orthographic Projection |                                       | Enable/disable orthographic projection                                  |
+| View Back                      | <span class="keycombo">Shift+Y</span> |                                                                         |
+| View Bottom                    | <span class="keycombo">Shift+Z</span> |                                                                         |
+| View Front                     | Y                                     |                                                                         |
+| View Left                      | <span class="keycombo">Shift+X</span> |                                                                         |
+| View Right                     | X                                     |                                                                         |
+| View Top                       | Z                                     |                                                                         |
+
+## Common
+
+The actions below are available across KiCad, including in the PCB
+Editor. Hotkeys can be assigned to any of these actions in the
+**Hotkeys** section of the preferences.
+
+| Action                                        | Default Hotkey                              | Description                                                             |
+|-----------------------------------------------|---------------------------------------------|-------------------------------------------------------------------------|
+| Refresh Plugins                               |                                             | Reload all python plugins and refresh plugin menus                      |
+| Exclude Marker                                |                                             | Mark current violation in Checker window as an exclusion                |
+| Next Marker                                   |                                             |                                                                         |
+| Previous Marker                               |                                             |                                                                         |
+| Add Library…                                  |                                             | Add an existing library folder                                          |
+| Center Justify                                |                                             | Center-justify fields and text items                                    |
+| Pan to Center Selected Objects                |                                             |                                                                         |
+| Collapse All                                  |                                             |                                                                         |
+| Click                                         | Return                                      | Performs left mouse button click                                        |
+| Double-click                                  | End                                         | Performs left mouse button double-click                                 |
+| Cursor Down                                   | Down                                        |                                                                         |
+| Cursor Down Fast                              | <span class="keycombo">Ctrl+Down</span>     |                                                                         |
+| Cursor Left                                   | Left                                        |                                                                         |
+| Cursor Left Fast                              | <span class="keycombo">Ctrl+Left</span>     |                                                                         |
+| Cursor Right                                  | Right                                       |                                                                         |
+| Cursor Right Fast                             | <span class="keycombo">Ctrl+Right</span>    |                                                                         |
+| Cursor Up                                     | Up                                          |                                                                         |
+| Cursor Up Fast                                | <span class="keycombo">Ctrl+Up</span>       |                                                                         |
+| Grid Origin…​                                  |                                             | Set the grid origin point                                               |
+| Edit Grids…​                                   |                                             | Edit grid definitions                                                   |
+| Expand All                                    |                                             |                                                                         |
+| Switch to Fast Grid 1                         | <span class="keycombo">Alt+1</span>         |                                                                         |
+| Switch to Fast Grid 2                         | <span class="keycombo">Alt+2</span>         |                                                                         |
+| Cycle Fast Grid                               | <span class="keycombo">Alt+4</span>         |                                                                         |
+| Switch to Next Grid                           | N                                           |                                                                         |
+| Switch to Previous Grid                       | <span class="keycombo">Shift+N</span>       |                                                                         |
+| Reset Grid Origin                             |                                             |                                                                         |
+| Grid Origin                                   |                                             | Place the grid origin point                                             |
+| Hide Library Tree                             |                                             |                                                                         |
+| Inactive Layer View Mode                      |                                             | Toggle inactive layers between normal and dimmed                        |
+| Inactive Layer View Mode (3-state)            | H                                           | Cycle inactive layers between normal, dimmed, and hidden                |
+| Inches                                        |                                             |                                                                         |
+| Left Justify                                  |                                             | Left-justify fields and text items                                      |
+| Focus Library Tree Search Field               | <span class="keycombo">Ctrl+L</span>        |                                                                         |
+| Snap to Objects on the Active Layer Only      |                                             | Enables snapping to objects on the active layer only                    |
+| Snap to Objects on All Layers                 |                                             | Enables snapping to objects on all visible layers                       |
+| Toggle Snapping Between Active and All Layers | <span class="keycombo">Shift+S</span>       | Toggles between snapping on all visible layers and only the active area |
+| Millimeters                                   |                                             |                                                                         |
+| Mils                                          |                                             |                                                                         |
+| New…​                                          | <span class="keycombo">Ctrl+N</span>        | Create a new document in the editor                                     |
+| New Library…                                  |                                             | Create a new library folder                                             |
+| Open…​                                         | <span class="keycombo">Ctrl+O</span>        | Open existing document                                                  |
+| Open in file explorer…​                        |                                             | Open a library file with system file explorer                           |
+| Edit in a Text Editor…​                        |                                             | Open a library file with a text editor                                  |
+| Page Settings…​                                |                                             | Settings for paper size and title block info                            |
+| Pan Down                                      | <span class="keycombo">Shift+Down</span>    |                                                                         |
+| Pan Left                                      | <span class="keycombo">Shift+Left</span>    |                                                                         |
+| Pan Right                                     | <span class="keycombo">Shift+Right</span>   |                                                                         |
+| Pan Up                                        | <span class="keycombo">Shift+Up</span>      |                                                                         |
+| Pin Library                                   |                                             | Keep the library at the top of the list                                 |
+| Plot…​                                         |                                             |                                                                         |
+| Print…​                                        | <span class="keycombo">Ctrl+P</span>        |                                                                         |
+| Quit                                          |                                             | Close the current editor                                                |
+| Redo Last Zoom                                |                                             | Return zoom to level prior to last zoom undo                            |
+| Reset Local Coordinates                       | Space                                       |                                                                         |
+| Revert                                        |                                             | Throw away changes                                                      |
+| Right Justify                                 |                                             | Right-justify fields and text items                                     |
+| Save                                          | <span class="keycombo">Ctrl+S</span>        | Save changes                                                            |
+| Save All                                      |                                             | Save all changes                                                        |
+| Save As…                                      | <span class="keycombo">Ctrl+Shift+S</span>  | Save current document to another location                               |
+| Save a Copy…​                                  |                                             | Save a copy of the current document to another location                 |
+| Select Columns…​                               |                                             |                                                                         |
+| 3D Viewer                                     | <span class="keycombo">Alt+3</span>         | Show 3D viewer window                                                   |
+| Show Context Menu                             |                                             | Perform the right-mouse-button action                                   |
+| Show Datasheet                                | D                                           | Open the datasheet in a browser                                         |
+| Footprint Library Browser                     |                                             |                                                                         |
+| Footprint Editor                              |                                             | Create, delete and edit board footprints                                |
+| Library Tree                                  |                                             |                                                                         |
+| Switch to Project Manager                     |                                             | Show project window                                                     |
+| Properties                                    |                                             | Show/hide the properties manager                                        |
+| Symbol Library Browser                        |                                             |                                                                         |
+| Symbol Editor                                 |                                             | Create, delete and edit schematic symbols                               |
+| Draw Bounding Boxes                           |                                             |                                                                         |
+| Always Show Crosshairs                        | <span class="keycombo">Ctrl+Shift+X</span>  | Display crosshairs even when not drawing objects                        |
+| Full-Window Crosshairs                        |                                             | Switch display of full-window crosshairs                                |
+| Show Grid                                     |                                             | Display background grid in the edit window                              |
+| Grid Overrides                                | <span class="keycombo">Ctrl+Shift+G</span>  | Enables item-specific grids that override the current grid              |
+| Polar Coordinates                             |                                             | Switch between polar and cartesian coordinate systems                   |
+| Switch units                                  | <span class="keycombo">Ctrl+U</span>        | Switch between imperial and metric units                                |
+| Undo Last Zoom                                |                                             | Return zoom to level prior to last zoom action                          |
+| Unpin Library                                 |                                             | No longer keep the library at the top of the list                       |
+| Update PCB from Schematic…                    | F8                                          | Update PCB with changes made to schematic                               |
+| Update Schematic from PCB…​                    |                                             | Update schematic with changes made to PCB                               |
+| Center on Cursor                              | F4                                          |                                                                         |
+| Zoom to Objects                               | <span class="keycombo">Ctrl+Home</span>     |                                                                         |
+| Zoom to Fit                                   | Home                                        |                                                                         |
+| Zoom to Selected Objects                      |                                             |                                                                         |
+| Zoom In at Cursor                             | F1                                          |                                                                         |
+| Zoom In                                       |                                             |                                                                         |
+| Zoom In Horizontally                          |                                             | Zoom in horizontally the plot area                                      |
+| Zoom In Vertically                            |                                             | Zoom in vertically the plot area                                        |
+| Zoom Out at Cursor                            | F2                                          |                                                                         |
+| Zoom Out                                      |                                             |                                                                         |
+| Zoom Out Horizontally                         |                                             | Zoom out horizontally the plot area                                     |
+| Zoom Out Vertically                           |                                             | Zoom out vertically the plot area                                       |
+| Refresh                                       | F5                                          |                                                                         |
+| Zoom to Selection                             | <span class="keycombo">Ctrl+F5</span>       |                                                                         |
+| Embedded Files                                |                                             | Manage embedded files                                                   |
+| Extract File                                  |                                             | Extract an embedded file                                                |
+| Remove File                                   |                                             | Remove an embedded file                                                 |
+| Cancel                                        |                                             | Cancel current tool                                                     |
+| Copy                                          | <span class="keycombo">Ctrl+C</span>        | Copy selected item(s) to clipboard                                      |
+| Copy as Text                                  | <span class="keycombo">Ctrl+Shift+C</span>  | Copy selected item(s) to clipboard as text                              |
+| Cut                                           | <span class="keycombo">Ctrl+X</span>        | Cut selected item(s) to clipboard                                       |
+| Cycle Arc Editing Mode                        | <span class="keycombo">Ctrl+Space</span>    | Switch to a different method of editing arcs                            |
+| Delete                                        | Del                                         | Delete selected item(s)                                                 |
+| Interactive Delete Tool                       |                                             | Delete clicked items                                                    |
+| Duplicate                                     | <span class="keycombo">Ctrl+D</span>        | Duplicates the selected item(s)                                         |
+| Find                                          | <span class="keycombo">Ctrl+F</span>        |                                                                         |
+| Find and Replace                              | <span class="keycombo">Ctrl+Alt+F</span>    |                                                                         |
+| Find Next                                     | F3                                          |                                                                         |
+| Find Next Marker                              | <span class="keycombo">Ctrl+Shift+F3</span> |                                                                         |
+| Find Previous                                 | <span class="keycombo">Shift+F3</span>      |                                                                         |
+| Finish                                        | End                                         | Finish current tool                                                     |
+| Measure Tool                                  | <span class="keycombo">Ctrl+Shift+M</span>  | Interactively measure distance between points                           |
+| Paste                                         | <span class="keycombo">Ctrl+V</span>        | Paste item(s) from clipboard                                            |
+| Paste Special…​                                |                                             | Paste item(s) from clipboard with options                               |
+| Redo                                          | <span class="keycombo">Ctrl+Y</span>        |                                                                         |
+| Replace All                                   |                                             |                                                                         |
+| Replace and Find Next                         |                                             |                                                                         |
+| Search                                        | <span class="keycombo">Ctrl+G</span>        | Show/hide the search panel                                              |
+| Select All                                    | <span class="keycombo">Ctrl+A</span>        | Select all items on screen                                              |
+| Undo                                          | <span class="keycombo">Ctrl+Z</span>        |                                                                         |
+| Unselect All                                  | <span class="keycombo">Ctrl+Shift+A</span>  | Unselect all items on screen                                            |
+| Select Row(s)                                 |                                             | Select complete row(s) containing the current selected cell(s)          |
+| Select Column(s)                              |                                             | Select complete column(s) containing the current selected cell(s)       |
+| Select Table                                  |                                             | Select parent table of selected cell(s)                                 |
+| Select item(s)                                |                                             |                                                                         |
+| About KiCad                                   |                                             |                                                                         |
+| Configure Paths…                              |                                             | Edit path configuration environment variables                           |
+| Donate                                        |                                             | Open "Donate to KiCad" in a web browser                                 |
+| Get Involved                                  |                                             | Open "Contribute to KiCad" in a web browser                             |
+| Getting Started with KiCad                    |                                             | Open “Getting Started in KiCad” guide for beginners                     |
+| Help                                          |                                             | Open product documentation in a web browser                             |
+| List Hotkeys…​                                 | <span class="keycombo">Ctrl+F1</span>       | Displays current hotkeys table and corresponding commands               |
+| Preferences…​                                  | <span class="keycombo">Ctrl+,</span>        | Show preferences for all open tools                                     |
+| Report Bug                                    |                                             | Report a problem with KiCad                                             |
+| Manage Design Block Libraries…​                |                                             | Edit the global and project design block library lists                  |
+| Manage Footprint Libraries…​                   |                                             | Edit the global and project footprint library lists                     |
+| Manage Symbol Libraries…                      |                                             | Edit the global and project symbol library lists                        |
+| Add Column After                              |                                             | Insert a new table column after the selected cell(s)                    |
+| Add Column Before                             |                                             | Insert a new table column before the selected cell(s)                   |
+| Add Row Above                                 |                                             | Insert a new table row above the selected cell(s)                       |
+| Add Row Below                                 |                                             | Insert a new table row below the selected cell(s)                       |
+| Delete Column(s)                              |                                             | Delete columns containing the currently selected cell(s)                |
+| Delete Row(s)                                 |                                             | Delete rows containing the currently selected cell(s)                   |
+| Merge Cells                                   |                                             | Turn selected table cells into a single cell                            |
+| Unmerge Cells                                 |                                             | Turn merged table cells back into separate cells.                       |

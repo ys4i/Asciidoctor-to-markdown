@@ -1,4 +1,4 @@
-## KiCad ドキュメントを Asciidoctor → DocBook(XML) → Pandoc → Markdown(GFM) に変換する手順
+## Asciidoctor ドキュメント(KiCadドキュメント)を Asciidoctor → DocBook(XML) → Pandoc → Markdown(GFM) に変換する手順
 
 以下では Debian/Ubuntu 系 Linux 環境を想定しています。macOS などではパッケージ導入コマンドが異なる場合があります。
 
